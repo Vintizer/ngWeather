@@ -1,0 +1,8 @@
+<app-list
+ [hotels]="hotels"
+ [activeHotel]="activeHotel"
+ [setActiveHotel]="setThisActive"
+ ></app-list>
+ <h1>{{activeHotel.description}}</h1>
+<app-weather [weather]="activeHotel.weather"></app-weather>
+<app-profile [profile]="activeHotel.profile"></app-profile>

@@ -1,0 +1,5 @@
+<div *ngFor="let hotel of hotels" (click)="setActiveHotel(hotel.id)">
+  <p>{{hotel.address}}</p>
+  <p>{{hotel.description}}</p>
+  <p>{{hotel.phone}}</p>
+</div>
