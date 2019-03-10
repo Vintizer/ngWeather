@@ -10,6 +10,7 @@ export class ListComponent implements OnInit {
   @Input() hotels: IHotel[] = [];
   @Input() activeHotel: IHotel;
   @Input() setActiveHotel: (id: number) => void;
+  @Input() addToFavorites: (id: number) => void;
   constructor() {}
 
   ngOnInit() {}

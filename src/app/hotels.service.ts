@@ -1,6 +1,7 @@
 import { IHotel } from './models/hotel';
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import { of } from 'rxjs';
 export class HotelsService {
   constructor() { }
   getHotels() {
-    return of(hotelsData);
+    return of(hotelsData).pipe(delay(3000)) ;
   }
 }
 const hotelsData: IHotel[] = [

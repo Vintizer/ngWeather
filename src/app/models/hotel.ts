@@ -20,3 +20,6 @@ export interface IHotel {
   profile: IProfile;
   stars: number;
 }
+export interface IFavoriteHotel extends IHotel {
+  voted: number;
+}

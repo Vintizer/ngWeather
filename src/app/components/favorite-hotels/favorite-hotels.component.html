@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="row">
+    <ul>
+      <li *ngFor="let hotel of favoriteHotels" class="list-group-item d-flex justify-content-between align-items-center">
+          {{ hotel.title }}
+          <p>
+            <span class="badge badge-primary badge-pill mr-1">Voted {{ hotel.voted }}</span>
+            <a href="#" (click)="removeFromFavorites(hotel.id)" class="badge badge-primary badge-pill">X</a>
+          </p>
+      </li>
+    </ul>
+  </div>
+</div>
