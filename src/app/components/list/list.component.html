@@ -1,5 +1,11 @@
-<div *ngFor="let hotel of hotels" (click)="setActiveHotel(hotel.id)">
-  <p>{{hotel.address}}</p>
-  <p>{{hotel.description}}</p>
-  <p>{{hotel.phone}}</p>
+<div class="container">
+  <div class="list-group">
+      <a *ngFor="let hotel of hotels" (click)="setActiveHotel(hotel.id)" class="list-group-item list-group-item-action" [ngClass]="{active: activeHotel === hotel}">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{ hotel.address }}</h5>
+          <small>{{ hotel.phone }}</small>
+        </div>
+        <p class="mb-1">{{ hotel.description }}</p>
+      </a>
+    </div>
 </div>

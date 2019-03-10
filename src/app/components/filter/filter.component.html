@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="d-flex w-100 justify-content-center mt-3">
+    <div class="input-group mb-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Filter hotels"
+        aria-label="Filter hotels"
+        aria-describedby="basic-addon1"
+        (input)="changeFilter($event)"
+      />
+    </div>
+  </div>
+  <div class="d-flex w-100 justify-content-center mb-3">
+    <div class="btn-group mr-2" role="group" aria-label="First group">
+      <button type="button" class="btn btn-success" (click)="addStarFilter('All')">All</button>
+      <button type="button" class="btn btn-success" (click)="addStarFilter('3')">
+        <i
+          *ngFor="let i of [1, 2, 3]"
+          class="fa-star"
+          [ngClass]="{ far: !starsFilter.includes('3'), fas: starsFilter.includes('3') }"
+        ></i>
+      </button>
+      <button type="button" class="btn btn-success" (click)="addStarFilter('4')">
+        <i
+          *ngFor="let i of [1, 2, 3, 4]"
+          class="fa-star"
+          [ngClass]="{ far: !starsFilter.includes('4'), fas: starsFilter.includes('4') }"
+        ></i>
+      </button>
+      <button type="button" class="btn btn-success" (click)="addStarFilter('5')">
+        <i
+          *ngFor="let i of [1, 2, 3, 4, 5]"
+          class="fa-star"
+          [ngClass]="{ far: !starsFilter.includes('5'), fas: starsFilter.includes('5') }"
+        ></i>
+      </button>
+    </div>
+  </div>
+</div>

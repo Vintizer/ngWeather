@@ -7,10 +7,11 @@ import { ProfileComponent } from "../components/profile/profile.component";
 import { HotelsComponent } from "./hotels.component";
 import { MatCardModule } from "@angular/material/card";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FilterComponent } from '../components/filter/filter.component';
 
 
 @NgModule({
-  declarations: [ListComponent, WeatherComponent, ProfileComponent, HotelsComponent],
+  declarations: [ListComponent, WeatherComponent, ProfileComponent, HotelsComponent, FilterComponent],
   imports: [CommonModule, MatCardModule, FontAwesomeModule],
   exports: [HotelsComponent]
 })

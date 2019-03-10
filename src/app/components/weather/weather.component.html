@@ -1,14 +1,10 @@
-<div class="container">
-  <div class="row">
+<div class="container" *ngIf="weather">
     <div class="card text-white mb-3 bg-info" style="max-width: 18rem;">
       <div class="card-header">The weather is</div>
       <div class="card-body">
         <i class="fas fa-{{ weather.icon }} fa-2x"></i>
         <span class="temperature">{{ weather.temperature }}°</span>
       </div>
-      <span class="text-center mb-2">Wind - {{ weather.wind }}°</span>
+      <span class="text-center mb-2">Wind - {{ weather.wind }} m/s</span>
     </div>
-  </div>
 </div>
-
-<mat-card-subtitle>{{ weather.wind }}</mat-card-subtitle>

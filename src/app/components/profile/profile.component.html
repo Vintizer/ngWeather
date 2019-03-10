@@ -1,5 +1,10 @@
-<div>
-  {{profile.followers}}
-  {{profile.following}}
-  {{profile.photo}}
+<div class="card" style="max-width: 160px;" *ngIf="profile">
+  <img src="{{profile.photo}}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title" style="font-size: 13px">Social activity</h5>
+    <div class="row">
+      <p class="card-text" style="font-size: 11px">Followers {{profile.followers}}</p>
+      <p class="card-text" style="font-size: 11px">Following {{profile.following}}</p>
+    </div>
+  </div>
 </div>
