@@ -1,26 +1,37 @@
-<div class="container">
-  <div class="list-group hotelImg" *ngIf="hotels.length">
-    <div class="" *ngIf="activeHotel">
-      <img src="{{activeHotel.picture}}" class="hotelImg rounded mx-auto d-block" alt="{{activeHotel.description}}">
-    </div>
-    <a 
+<div class="list-group" *ngIf="hotels.length">
+  <div class="row align-items-center" *ngIf="activeHotel">
+    <img src="{{ activeHotel.picture }}" class="hotelImg rounded mx-auto d-block" alt="{{ activeHotel.description }}" />
+  </div>
+  <br />
+  <div class="row">
+    <a
       *ngFor="let hotel of hotels; let i = index"
       (click)="setActiveHotel($event, hotel.id)"
       class="list-group-item list-group-item-action"
-      [ngClass]="{ active: activeHotel === hotel,
-      'list-group-item-secondary': i%2 && activeHotel !== hotel}"
+      [ngClass]="{ active: activeHotel === hotel, 'list-group-item-secondary': i % 2 && activeHotel !== hotel }"
     >
       <div class="container">
         <div class="d-flex w-100 justify-content-between">
           <h5 class="mb-1">{{ hotel.address }}</h5>
           <small>{{ hotel.phone }}</small>
         </div>
-        <p class="mb-1">{{ hotel.description }}</p>
+        <div class="row">
+          <div class="col">
+            <p class="mb-1">{{ hotel.description }}</p>
+          </div>
+          <div class="col">
+            <img
+              *ngFor="let photoUrl of hotel.photos"
+              class="rounded-circle w-50"
+              src="{{ photoUrl }}"
+            />
+          </div>
+        </div>
       </div>
       <button (click)="addToFavorites(hotel.id)" class="btn btn-success">
         Add to favorites
       </button>
     </a>
   </div>
-  <div class="list-group" *ngIf="!hotels.length">Loading...</div>
 </div>
+<div class="list-group" *ngIf="!hotels.length">Loading...</div>
