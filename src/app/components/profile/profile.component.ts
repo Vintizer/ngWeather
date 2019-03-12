@@ -1,5 +1,5 @@
 import { IProfile } from './../../models/hotel';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-profile',
@@ -7,10 +7,10 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  @Input() profile: IProfile;
-  constructor() { }
+  @Input() public profile: IProfile;
+  public constructor() { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
   }
 
 }

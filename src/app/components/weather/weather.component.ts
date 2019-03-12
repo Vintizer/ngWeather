@@ -1,5 +1,5 @@
 import { IWeather } from './../../models/hotel';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit  } from '@angular/core';
 
 @Component({
   selector: 'app-weather',
@@ -7,10 +7,10 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./weather.component.css']
 })
 export class WeatherComponent implements OnInit {
-  @Input() weather: IWeather;
-  constructor() { }
+  @Input() public weather: IWeather;
+  public constructor() { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
   }
 
 }

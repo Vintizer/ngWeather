@@ -1,5 +1,6 @@
+import { Component, Input, OnInit } from '@angular/core';
+
 import { IFavoriteHotel } from './../../models/hotel';
-import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-favorite-hotels',
@@ -7,11 +8,9 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./favorite-hotels.component.css']
 })
 export class FavoriteHotelsComponent implements OnInit {
-  @Input() favoriteHotels: IFavoriteHotel[];
-  @Input() removeFromFavorites: (id: number) => {};
-  constructor() { }
+  @Input() public favoriteHotels: IFavoriteHotel[];
+  @Input() public removeFromFavorites: (id: number) => {};
+  public constructor() {}
 
-  ngOnInit() {
-  }
-
+  public ngOnInit(): void {}
 }
