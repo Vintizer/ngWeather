@@ -1,21 +1,38 @@
 <div class="container">
   <div class="row justify-content-center">
-      <div class="input-group mb-3">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Filter hotels"
-            aria-label="Filter hotels"
-            aria-describedby="basic-addon1"
-            (input)="changeFilter($event)"
-          />
-        </div>
+    <div class="input-group mb-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Filter hotels"
+        aria-label="Filter hotels"
+        aria-describedby="basic-addon1"
+        (input)="changeFilter($event)"
+      />
+    </div>
   </div>
   <div class="row justify-content-center mb-2">
-      <div class="btn-group" role="group" aria-label="First group">
-          <button type="button" class="btn btn-success" (click)="addStarFilter('All')">All</button>
-          <button type="button" class="btn btn-success" (click)="addStarFilter('3')">
-            <i
+    <div class="btn-group" role="group" aria-label="First group">
+      <button
+        type="button"
+        class="btn btn-success"
+        (click)="addStarFilter('All')"
+      >
+        All
+      </button>
+      <button
+        type="button"
+        class="btn btn-success"
+        (click)="addStarFilter('3')"
+      >
+        <app-stars
+          [starsCount]="3"
+          [starsClass]="star.includes('3')"
+        ></app-stars>
+      </button>
+      <!-- <app-stars [starsCount]="4" [starsClass]="star.includes('3')"></app-stars>
+      <app-stars [starsCount]="5" [starsClass]="star.includes('3')"></app-stars> -->
+      <!-- <i
               *ngFor="let i of [1, 2, 3]"
               class="fa-star"
               [ngClass]="{ far: !starsFilter.includes('3'), fas: starsFilter.includes('3') }"
@@ -34,7 +51,7 @@
               class="fa-star"
               [ngClass]="{ far: !starsFilter.includes('5'), fas: starsFilter.includes('5') }"
             ></i>
-          </button>
-        </div>
+          </button> -->
+    </div>
   </div>
 </div>

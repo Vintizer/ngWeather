@@ -1,4 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { IFilter } from './../../models/hotel';
+import { Component, OnInit, Output } from '@angular/core';
+import { EventEmitter } from '@angular/core';
+
+const initialStarValue: string[] = ['3', '4', '5'];
 
 @Component({
   selector: 'app-filter',
@@ -6,35 +10,40 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./filter.component.css']
 })
 export class FilterComponent implements OnInit {
-  @Input() public setFilter: (filterText: string) => void;
-  @Input() public setStars: (filterText: string) => void;
-  @Input() public starsFilter: string[];
+  public star: string[] = initialStarValue;
+  public inputFilter: string = '';
+  @Output() public filterChange: EventEmitter<IFilter> = new EventEmitter();
+
   public constructor() {}
 
   public ngOnInit(): void {}
+  public filter(): void {
+    this.filterChange.emit({
+      star: this.star,
+      inputFilter: this.inputFilter
+    });
+  }
   public changeFilter(e: Event): void {
-    this.setFilter(e.target.value);
+    this.inputFilter = e.target['value'];
+    this.filter();
   }
   public addStarFilter(filterName: string): void {
     if (filterName === 'All') {
-      const curStars: string[] = this.starsFilter;
+      const curStars: string[] = this.star;
       if (curStars.length < 3) {
-        if (!curStars.includes('3')) {
-          this.setStars('3');
-        }
-        if (!curStars.includes('4')) {
-          this.setStars('4');
-        }
-        if (!curStars.includes('5')) {
-          this.setStars('5');
-        }
+        this.star = initialStarValue;
       } else {
-        this.setStars('3');
-        this.setStars('4');
-        this.setStars('5');
+        this.star = [];
       }
     } else {
-      this.setStars(filterName);
+      if (this.star.includes(filterName)) {
+        this.star = this.star.filter(
+          (starVal: string) => starVal !== filterName
+        );
+      } else {
+        this.star.push(filterName);
+      }
     }
+    this.filter();
   }
 }

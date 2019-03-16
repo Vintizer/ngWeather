@@ -10,6 +10,7 @@ import { ProfileComponent } from '../components/profile/profile.component';
 import { WeatherComponent } from '../components/weather/weather.component';
 import { LoadingDirective } from '../loading.directive';
 import { HotelsComponent } from './hotels.component';
+import { StarsComponent } from '../components/stars/stars.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { HotelsComponent } from './hotels.component';
     HotelsComponent,
     FilterComponent,
     FavoriteHotelsComponent,
-    LoadingDirective
+    LoadingDirective,
+    StarsComponent
   ],
   imports: [CommonModule, MatCardModule, FontAwesomeModule],
   exports: [HotelsComponent]

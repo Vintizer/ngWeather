@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NotificationsService } from 'angular2-notifications';
 
 import { HotelsService } from './../hotels.service';
-import { IFavoriteHotel, IHotel } from './../models/hotel';
+import { IFavoriteHotel, IHotel, IFilter } from './../models/hotel';
 
 @Component({
   selector: 'app-hotels',
@@ -15,9 +15,13 @@ export class HotelsComponent implements OnInit {
   public filteredHotels: IHotel[] = this.hotels;
   public starsFilter: string[] = ['3', '4', '5'];
   public filterText: string = '';
+  public filterData: IFilter = {
+    star: ['3', '4', '5'],
+    inputFilter: ''
+  };
   public favoriteHotels: IFavoriteHotel[] = [];
   public setThisActive: () => void = this.setActiveHotel.bind(this);
-  public setThisFilter: () => void = this.setFilter.bind(this);
+  // public setThisFilter: () => void = this.setFilter.bind(this);
   public addThisToFavorites: () => void = this.addToFavorites.bind(this);
   public removeThisFromFavorites: () => void = this.removeFromFavorites.bind(this);
   public setThisStarsFilter: () => void = this.setStarsFilter.bind(this);
@@ -35,30 +39,31 @@ export class HotelsComponent implements OnInit {
     this.activeHotel = this.hotels.find((hotel: IHotel) => hotel.id === 0);
   }
   private setActiveHotel($event: MouseEvent, activeHotelId: number): void {
-    if ($event.target.tagName !== 'BUTTON') {
+    if ($event.target['tagName'] !== 'BUTTON') {
       this.activeHotel = this.hotels.find(
         (hotel: IHotel) => hotel.id === activeHotelId
       );
     }
   }
-  private filter(): void {
-    this.filteredHotels = this.hotels.filter((hotel: IHotel) => {
-      const isDescr: boolean = (hotel.description || '')
-        .toUpperCase()
-        .includes(this.filterText.toUpperCase());
-      const isTitle: boolean = (hotel.title || '')
-        .toUpperCase()
-        .includes(this.filterText.toUpperCase());
-      const isStars: boolean = this.starsFilter.includes(
-        hotel.stars.toString()
-      );
-      return isStars && (isDescr || isTitle);
-    });
+  private filter(e): void {
+    console.log('e: ', e);
+    // this.filteredHotels = this.hotels.filter((hotel: IHotel) => {
+    //   const isDescr: boolean = (hotel.description || '')
+    //     .toUpperCase()
+    //     .includes(this.filterData.inputFilter.toUpperCase());
+    //   const isTitle: boolean = (hotel.title || '')
+    //     .toUpperCase()
+    //     .includes(this.filterData.inputFilter.toUpperCase());
+    //   const isStars: boolean = this.filterData.star.includes(
+    //     hotel.stars.toString()
+    //   );
+    //   return isStars && (isDescr || isTitle);
+    // });
   }
-  private setFilter(filterText: string): void {
-    this.filterText = filterText;
-    this.filter();
-  }
+  // private setFilter(filterText: string): void {
+  //   this.filterText = filterText;
+  //   this.filter();
+  // }
   private addToFavorites(hotelId: number): void {
     const curHotel: IHotel = this.hotels.find((hotel: IHotel) => hotel.id === hotelId);
     if (!curHotel) {
@@ -101,6 +106,6 @@ export class HotelsComponent implements OnInit {
     } else {
       this.starsFilter.push(starsFilter);
     }
-    this.filter();
+    // this.filter();
   }
 }

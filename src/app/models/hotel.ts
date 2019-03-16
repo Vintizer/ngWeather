@@ -1,3 +1,7 @@
+export interface IFilter {
+  star: string[];
+  inputFilter: string;
+}
 export interface IWeather {
   temperature: number;
   wind: number;
