@@ -27,3 +27,12 @@ export interface IHotel {
 export interface IFavoriteHotel extends IHotel {
   voted: number;
 }
+export interface IFavoriteView{
+  voted: number;
+  title: string;
+  id: number;
+}
+export interface IHotelView{
+  title: string;
+  id: number;
+}

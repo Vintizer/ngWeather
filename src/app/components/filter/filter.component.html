@@ -1,6 +1,7 @@
-<div class="container">
+<div  class="container">
+  <div class="ds" *appLoading></div>
   <div class="row justify-content-center">
-    <div class="input-group mb-3">
+    <div class="input-group mb-3 mt-3">
       <input
         type="text"
         class="form-control"
@@ -11,7 +12,7 @@
       />
     </div>
   </div>
-  <div class="row justify-content-center mb-2">
+  <div class="row justify-content-center mb-3">
     <div class="btn-group" role="group" aria-label="First group">
       <button
         type="button"
@@ -20,38 +21,12 @@
       >
         All
       </button>
-      <button
-        type="button"
-        class="btn btn-success"
-        (click)="addStarFilter('3')"
-      >
-        <app-stars
-          [starsCount]="3"
-          [starsClass]="star.includes('3')"
-        ></app-stars>
-      </button>
-      <!-- <app-stars [starsCount]="4" [starsClass]="star.includes('3')"></app-stars>
-      <app-stars [starsCount]="5" [starsClass]="star.includes('3')"></app-stars> -->
-      <!-- <i
-              *ngFor="let i of [1, 2, 3]"
-              class="fa-star"
-              [ngClass]="{ far: !starsFilter.includes('3'), fas: starsFilter.includes('3') }"
-            ></i>
-          </button>
-          <button type="button" class="btn btn-success" (click)="addStarFilter('4')">
-            <i
-              *ngFor="let i of [1, 2, 3, 4]"
-              class="fa-star"
-              [ngClass]="{ far: !starsFilter.includes('4'), fas: starsFilter.includes('4') }"
-            ></i>
-          </button>
-          <button type="button" class="btn btn-success" (click)="addStarFilter('5')">
-            <i
-              *ngFor="let i of [1, 2, 3, 4, 5]"
-              class="fa-star"
-              [ngClass]="{ far: !starsFilter.includes('5'), fas: starsFilter.includes('5') }"
-            ></i>
-          </button> -->
+      <app-stars
+        *ngFor="let starsCount of ['3', '4', '5']"
+        [starsCount]="starsCount"
+        [starsClass]="star.includes(starsCount)"
+        (starsClicked)="addStarFilter($event)"
+      ></app-stars>
     </div>
   </div>
 </div>

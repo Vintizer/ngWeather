@@ -6,7 +6,7 @@
   <div class="row">
     <a
       *ngFor="let hotel of hotels; let i = index"
-      (click)="setActiveHotel($event, hotel.id)"
+      (click)="setActiveHotel($event, hotel)"
       class="list-group-item list-group-item-action"
       [ngClass]="{ active: activeHotel === hotel, 'list-group-item-secondary': i % 2 && activeHotel !== hotel }"
     >

@@ -1,5 +1,6 @@
-<i
-*ngFor="let i of starArray"
-class="fa-star"
-[ngClass]="{ far: !starsClass, fas: starsClass }"
-></i>
+<button type="button" class="btn btn-success" (click)="clickStars()">
+  <i
+    *ngFor="let i of starArray"
+    class="fa-star {{starsClass ? 'fas' : 'far'}}"
+  ></i>
+</button>

@@ -8,9 +8,9 @@ import { FilterComponent } from '../components/filter/filter.component';
 import { ListComponent } from '../components/list/list.component';
 import { ProfileComponent } from '../components/profile/profile.component';
 import { WeatherComponent } from '../components/weather/weather.component';
-import { LoadingDirective } from '../loading.directive';
 import { HotelsComponent } from './hotels.component';
 import { StarsComponent } from '../components/stars/stars.component';
+import { FavoriteServiceService } from '../services/favorite-service.service';
 
 @NgModule({
   declarations: [
@@ -20,10 +20,10 @@ import { StarsComponent } from '../components/stars/stars.component';
     HotelsComponent,
     FilterComponent,
     FavoriteHotelsComponent,
-    LoadingDirective,
     StarsComponent
   ],
   imports: [CommonModule, MatCardModule, FontAwesomeModule],
-  exports: [HotelsComponent]
+  exports: [HotelsComponent],
+  providers: [FavoriteServiceService]
 })
 export class HotelsModule {}

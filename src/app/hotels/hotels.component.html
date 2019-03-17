@@ -5,10 +5,10 @@
   <div class="row justify-content-around">
     <div class="col-5">
       <app-list
+        (favoriteAdded)="favoriteAdded()"
+        (setActive)="setActiveHotel($event)"
         [hotels]="filteredHotels"
         [activeHotel]="activeHotel"
-        [setActiveHotel]="setThisActive"
-        [addToFavorites]="addThisToFavorites"
       ></app-list>
     </div>
     <div class="col-5">
@@ -22,9 +22,7 @@
       </div>
       <div class="row justify-content-center">
         <app-favorite-hotels
-          [removeFromFavorites]="removeThisFromFavorites"
-          [favoriteHotels]="favoriteHotels"
-        ></app-favorite-hotels>
+        (favoriteRemoved)="favoriteRemoved()"></app-favorite-hotels>
       </div>
     </div>
   </div>

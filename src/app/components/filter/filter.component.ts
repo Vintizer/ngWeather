@@ -10,31 +10,26 @@ const initialStarValue: string[] = ['3', '4', '5'];
   styleUrls: ['./filter.component.css']
 })
 export class FilterComponent implements OnInit {
-  public star: string[] = initialStarValue;
-  public inputFilter: string = '';
+  private star: string[] = initialStarValue;
+  private inputFilter: string = '';
   @Output() public filterChange: EventEmitter<IFilter> = new EventEmitter();
 
   public constructor() {}
 
   public ngOnInit(): void {}
-  public filter(): void {
+  private filter(): void {
     this.filterChange.emit({
       star: this.star,
       inputFilter: this.inputFilter
     });
   }
   public changeFilter(e: Event): void {
-    this.inputFilter = e.target['value'];
+    this.inputFilter = (e.target as HTMLInputElement).value;
     this.filter();
   }
   public addStarFilter(filterName: string): void {
     if (filterName === 'All') {
-      const curStars: string[] = this.star;
-      if (curStars.length < 3) {
-        this.star = initialStarValue;
-      } else {
-        this.star = [];
-      }
+      this.star = this.star.length < 3 ? initialStarValue : [];
     } else {
       if (this.star.includes(filterName)) {
         this.star = this.star.filter(
