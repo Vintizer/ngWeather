@@ -12,6 +12,7 @@ export class HotelsComponent implements OnInit {
   public hotels: IHotel[] = [];
   public activeHotel: IHotel;
   public filteredHotels: IHotel[] = this.hotels;
+  public isFirstLoadDone: boolean = false;
   public constructor(
     private hotelsService: HotelsService,
     private notificationsService: NotificationsService
@@ -22,6 +23,7 @@ export class HotelsComponent implements OnInit {
       this.hotels = data;
       this.filteredHotels = data;
       this.activeHotel = data[0];
+      this.isFirstLoadDone = true;
     });
     this.activeHotel = this.hotels.find(hotel => hotel.id === 0);
   }

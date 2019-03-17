@@ -34,4 +34,5 @@
     </a>
   </div>
 </div>
-<div class="list-group" *ngIf="!hotels.length">Loading...</div>
+<div class="list-group" *ngIf="!isLoaded">Loading...</div>
+<div class="list-group" *ngIf="isLoaded && hotels.length === 0">No valid hotels for your filters</div>

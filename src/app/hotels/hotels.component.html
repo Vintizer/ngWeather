@@ -9,12 +9,13 @@
         (setActive)="setActiveHotel($event)"
         [hotels]="filteredHotels"
         [activeHotel]="activeHotel"
+        [isLoaded]="isFirstLoadDone"
       ></app-list>
     </div>
     <div class="col-5">
-      <div class="row justify-content-around align-content-center">
-        <div class="col-6">
-          <app-weather [weather]="activeHotel?.weather"></app-weather>
+        <div class="row justify-content-around align-content-center">
+            <div class="col-6">
+              <app-weather [weather]="activeHotel?.weather"></app-weather>
         </div>
         <div class="col-6">
           <app-profile [profile]="activeHotel?.profile"></app-profile>

@@ -11,6 +11,8 @@ import { IHotel, IFavoriteView, IHotelView } from './../../models/hotel';
 export class ListComponent implements OnInit {
   @Input() public hotels: IHotel[] = [];
   @Input() public activeHotel: IHotel;
+  @Input() public isLoaded: boolean;
+  
   @Output() public setActive: EventEmitter<IHotel> = new EventEmitter();
   @Output() favoriteAdded: EventEmitter<true> = new EventEmitter();
 
