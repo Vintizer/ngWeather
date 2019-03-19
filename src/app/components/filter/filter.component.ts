@@ -10,14 +10,14 @@ const initialStarValue: string[] = ['3', '4', '5'];
   styleUrls: ['./filter.component.css']
 })
 export class FilterComponent implements OnInit {
+  @Output() public filterChange: EventEmitter<IFilter> = new EventEmitter();
   private star: string[] = initialStarValue;
   private inputFilter: string = '';
-  @Output() public filterChange: EventEmitter<IFilter> = new EventEmitter();
 
   public constructor() {}
 
   public ngOnInit(): void {}
-  private filter(): void {
+  public filter(): void {
     this.filterChange.emit({
       star: this.star,
       inputFilter: this.inputFilter

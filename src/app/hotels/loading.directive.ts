@@ -1,13 +1,14 @@
-import { LoadingComponent } from './../components/loading/loading.component';
 import {
-  Directive,
-  OnInit,
-  Input,
-  ViewContainerRef,
-  TemplateRef,
+  ComponentFactory,
   ComponentFactoryResolver,
-  ComponentFactory
+  Directive,
+  Input,
+  OnInit,
+  TemplateRef,
+  ViewContainerRef,
 } from '@angular/core';
+
+import { LoadingComponent } from './../components/loading/loading.component';
 
 @Directive({
   selector: '[loadElse]'
@@ -16,7 +17,7 @@ export class LoadingDirective implements OnInit {
   private _condition: boolean;
 
   @Input()
-  set loadElse(condition: any) {
+  public set loadElse(condition: any) {
     this._condition = condition;
     this._updateView();
   }
@@ -26,8 +27,9 @@ export class LoadingDirective implements OnInit {
     private template: TemplateRef<any>,
     private cfr: ComponentFactoryResolver
   ) {}
+  public ngOnInit(): void {}
+
   private _updateView(): void {
-    console.log('this._condition: ', this._condition);
     if (this._condition) {
       this.view.clear();
       this.view.createEmbeddedView(this.template);
@@ -36,8 +38,5 @@ export class LoadingDirective implements OnInit {
       const loadComponent: ComponentFactory<LoadingComponent> = this.cfr.resolveComponentFactory(LoadingComponent);
       this.view.createComponent(loadComponent);
     }
-  }
-  public ngOnInit(): void {
-   
   }
 }

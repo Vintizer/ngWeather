@@ -1,6 +1,7 @@
-import { FavoriteServiceService } from './../../services/favorite-service.service';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+
 import { IFavoriteView } from './../../models/hotel';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { FavoriteServiceService } from './../../services/favorite-service.service';
 
 @Component({
   selector: 'app-favorite-hotels',
@@ -9,7 +10,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class FavoriteHotelsComponent implements OnInit {
   public favoriteHotels: IFavoriteView[];
-  @Output() favoriteRemoved: EventEmitter<true> = new EventEmitter();
+  @Output() public favoriteRemoved: EventEmitter<true> = new EventEmitter();
 
   public constructor(private favService: FavoriteServiceService) {}
   public ngOnInit(): void {
