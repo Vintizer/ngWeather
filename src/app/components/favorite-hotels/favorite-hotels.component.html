@@ -1,10 +1,10 @@
 <div class="row justify-content-center">
   Favorites hotels
-  <div class="col-12 list-group-item d-flex justify-content-between" *ngFor="let hotel of favoriteHotels">
+  <div class="col-12 list-group-item d-flex justify-content-between" *ngFor="let hotel of favoriteHotels; trackBy: trackByFn">
     {{ hotel.title }}
     <p>
       <span class="badge badge-primary badge-pill mr-1">Voted {{ hotel.voted }}</span>
-      <a href="#" (click)="removeFromFavorites(hotel.id)" class="badge badge-primary badge-pill">X</a>
+      <a href="#" (click)="removeHotelFromFavorites(hotel.id)" class="badge badge-primary badge-pill">X</a>
     </p>
   </div>
 </div>

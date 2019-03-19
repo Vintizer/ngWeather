@@ -18,7 +18,8 @@ export class FavoriteServiceService {
     ) {
       this.favorites.find((fav: IFavoriteHotel) => fav.id === hotel.id).voted++;
     } else {
-      const newFavoriteHotel: IFavoriteView = Object.assign({}, hotel, {
+      const newFavoriteHotel: IFavoriteView = Object.assign({
+        ...hotel,
         voted: 1
       });
       this.favorites.push(newFavoriteHotel);

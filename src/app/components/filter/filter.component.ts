@@ -11,7 +11,7 @@ const initialStarValue: string[] = ['3', '4', '5'];
 })
 export class FilterComponent implements OnInit {
   @Output() public filterChange: EventEmitter<IFilter> = new EventEmitter();
-  private star: string[] = initialStarValue;
+  public star: string[] = initialStarValue;
   private inputFilter: string = '';
 
   public constructor() {}
@@ -40,5 +40,8 @@ export class FilterComponent implements OnInit {
       }
     }
     this.filter();
+  }
+  public trackByFn(_i: number, star: string): string {
+    return star;
   }
 }

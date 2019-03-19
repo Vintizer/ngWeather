@@ -12,6 +12,8 @@ export class ListComponent implements OnInit {
   @Input() public hotels: IHotel[] = [];
   @Input() public activeHotel: IHotel;
   @Input() public isLoaded: boolean;
+  @Input() public starFilter: string[];
+  @Input() public textFilter: string;
   @Output() public setActive: EventEmitter<IHotel> = new EventEmitter();
   @Output() public favoriteAdded: EventEmitter<true> = new EventEmitter();
 
@@ -19,17 +21,24 @@ export class ListComponent implements OnInit {
 
   public ngOnInit(): void {}
   public setActiveHotel($event: MouseEvent, hotel: IHotel): void {
-    if (($event.target as HTMLElement).tagName !== 'BUTTON') {
-      this.setActive.emit(hotel);
-    }
+    this.setActive.emit(hotel);
   }
-  public addToFavorites(hotelId: number): void {
-    const { title, id } = this.hotels.find((hotel: IHotel) => hotel.id === hotelId);
+  public addHotelToFavorites(hotelId: number, event: MouseEvent): void {
+    event.stopPropagation();
+    const { title, id } = this.hotels.find(
+      (hotel: IHotel) => hotel.id === hotelId
+    );
     const favoriteView: IHotelView = {
       title,
       id
     };
     this.favService.clickFavorite(favoriteView);
     this.favoriteAdded.emit(true);
+  }
+  public trackHotelsByFn(_i: number, hotel: IHotel): number {
+    return hotel.id;
+  }
+  public trackPicturesByFn(_i: number, src: string): string {
+    return src;
   }
 }

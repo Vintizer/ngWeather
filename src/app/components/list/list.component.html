@@ -5,10 +5,10 @@
   <br />
   <div class="row">
     <a
-      *ngFor="let hotel of hotels; let i = index"
+      *ngFor="let hotel of hotels | star: starFilter | hotelText: textFilter; odd as odd; trackBy:trackHotelsByFn"
       (click)="setActiveHotel($event, hotel)"
       class="list-group-item list-group-item-action"
-      [ngClass]="{ active: activeHotel === hotel, 'list-group-item-secondary': i % 2 && activeHotel !== hotel }"
+      [ngClass]="{ active: activeHotel === hotel, 'list-group-item-secondary': odd && activeHotel !== hotel }"
     >
       <div class="container">
         <div class="d-flex w-100 justify-content-between">
@@ -21,14 +21,14 @@
           </div>
           <div class="col">
             <img
-              *ngFor="let photoUrl of hotel.photos"
+              *ngFor="let photoUrl of hotel.photos; trackBy: trackPicturesByFn"
               class="rounded-circle w-50"
               src="{{ photoUrl }}"
             />
           </div>
         </div>
       </div>
-      <button (click)="addToFavorites(hotel.id)" class="btn btn-success">
+      <button (click)="addHotelToFavorites(hotel.id, $event)" class="btn btn-success">
         Add to favorites
       </button>
     </a>

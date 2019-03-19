@@ -1,6 +1,6 @@
 <button type="button" class="btn btn-success" (click)="clickStars()">
   <i
-    *ngFor="let i of starArray"
+    *ngFor="let i of starArray; trackBy: trackByFn"
     class="fa-star {{starsClass ? 'fas' : 'far'}}"
   ></i>
 </button>

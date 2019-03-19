@@ -1,3 +1,5 @@
+import { HotelTextPipe } from './../pipes/hotel-text.pipe';
+import { StarPipe } from './../pipes/star.pipe';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
@@ -24,7 +26,9 @@ import { LoadingDirective } from './loading.directive';
     FavoriteHotelsComponent,
     StarsComponent,
     LoadingComponent,
-    LoadingDirective
+    LoadingDirective,
+    StarPipe,
+    HotelTextPipe
   ],
   imports: [CommonModule, MatCardModule, FontAwesomeModule],
   exports: [HotelsComponent],

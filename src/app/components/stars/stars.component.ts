@@ -20,4 +20,7 @@ export class StarsComponent implements OnInit {
   public clickStars(): void {
     this.starsClicked.emit(this.starsCount.toString());
   }
+  public trackByFn(_i: number, starLength: number): number {
+    return starLength;
+  }
 }

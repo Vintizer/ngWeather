@@ -16,8 +16,11 @@ export class FavoriteHotelsComponent implements OnInit {
   public ngOnInit(): void {
     this.favoriteHotels = this.favService.getFavorites();
   }
-  public removeFromFavorites(id: number): void {
+  public removeHotelFromFavorites(id: number): void {
     this.favService.removeFromFavorites(id);
     this.favoriteRemoved.emit(true);
+  }
+  public trackByFn(_index: number, hotel: IFavoriteView): number {
+    return hotel.id;
   }
 }
