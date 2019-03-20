@@ -8,8 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "prep": "ng build --prod --base-href 'https://Vintizer.github.io/ngWeather/'",
-    "send": "ngh --dir 'dist/hotels'"
+    "prep": "",
+    "send": "ng build --prod --base-href https://Vintizer.github.io/ngWeather/ && ngh --dir dist/hotels"
   },
   "private": true,
   "dependencies": {
