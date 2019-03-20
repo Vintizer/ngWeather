@@ -1,3 +1,4 @@
+import { FilterService } from './../../services/filter.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
@@ -12,13 +13,13 @@ export class StarsComponent implements OnInit {
 
   public starArray: number[];
 
-  public constructor() { }
+  public constructor(private filterService: FilterService) { }
 
   public ngOnInit(): void {
     this.starArray = Array.from(Array(Number(this.starsCount)).keys());
   }
   public clickStars(): void {
-    this.starsClicked.emit(this.starsCount.toString());
+    this.filterService.setStarFilter(this.starsCount.toString());
   }
   public trackByFn(_i: number, starLength: number): number {
     return starLength;

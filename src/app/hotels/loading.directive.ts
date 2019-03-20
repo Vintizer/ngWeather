@@ -17,14 +17,14 @@ export class LoadingDirective implements OnInit {
   private _condition: boolean;
 
   @Input()
-  public set loadElse(condition: any) {
+  public set loadElse(condition: boolean) {
     this._condition = condition;
     this._updateView();
   }
 
   public constructor(
     private view: ViewContainerRef,
-    private template: TemplateRef<any>,
+    private template: TemplateRef<undefined>,
     private cfr: ComponentFactoryResolver
   ) {}
   public ngOnInit(): void {}

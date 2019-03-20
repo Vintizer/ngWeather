@@ -1,7 +1,6 @@
 import {
   IFavoriteHotel,
   IFavoriteView,
-  IHotel,
   IHotelView
 } from './../models/hotel';
 import { Injectable } from '@angular/core';
@@ -9,7 +8,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class FavoriteServiceService {
+export class FavoriteService {
   public favorites: IFavoriteView[] = [];
   public constructor() {}
   public clickFavorite(hotel: IHotelView): void {
@@ -36,5 +35,8 @@ export class FavoriteServiceService {
   }
   public clearFavorites(): void {
     this.favorites = [];
+  }
+  public isHotelInFavorite(hotelId: number): boolean {
+    return Boolean(this.favorites.find((fav: IFavoriteView) => fav.id === hotelId));
   }
 }

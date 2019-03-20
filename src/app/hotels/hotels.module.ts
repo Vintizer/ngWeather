@@ -1,3 +1,4 @@
+import { FilterService } from './../services/filter.service';
 import { HotelTextPipe } from './../pipes/hotel-text.pipe';
 import { StarPipe } from './../pipes/star.pipe';
 import { CommonModule } from '@angular/common';
@@ -12,7 +13,7 @@ import { LoadingComponent } from '../components/loading/loading.component';
 import { ProfileComponent } from '../components/profile/profile.component';
 import { StarsComponent } from '../components/stars/stars.component';
 import { WeatherComponent } from '../components/weather/weather.component';
-import { FavoriteServiceService } from '../services/favorite-service.service';
+import { FavoriteService } from '../services/favorite-service.service';
 import { HotelsComponent } from './hotels.component';
 import { LoadingDirective } from './loading.directive';
 
@@ -33,6 +34,6 @@ import { LoadingDirective } from './loading.directive';
   imports: [CommonModule, MatCardModule, FontAwesomeModule],
   exports: [HotelsComponent],
   entryComponents: [LoadingComponent],
-  providers: [FavoriteServiceService]
+  providers: [FavoriteService, FilterService]
 })
 export class HotelsModule {}

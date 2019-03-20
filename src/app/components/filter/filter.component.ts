@@ -1,3 +1,4 @@
+import { FilterService } from './../../services/filter.service';
 import { IFilter } from './../../models/hotel';
 import { Component, OnInit, Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
@@ -12,34 +13,19 @@ const initialStarValue: string[] = ['3', '4', '5'];
 export class FilterComponent implements OnInit {
   @Output() public filterChange: EventEmitter<IFilter> = new EventEmitter();
   public star: string[] = initialStarValue;
-  private inputFilter: string = '';
 
-  public constructor() {}
+  public constructor(private filterService: FilterService) {}
 
-  public ngOnInit(): void {}
-  public filter(): void {
-    this.filterChange.emit({
-      star: this.star,
-      inputFilter: this.inputFilter
-    });
+  public ngOnInit(): void {
+    this.filterService.starsEvent.subscribe(
+      (stars: string[]) => (this.star = stars)
+    );
   }
-  public changeFilter(e: Event): void {
-    this.inputFilter = (e.target as HTMLInputElement).value;
-    this.filter();
+  public changeFilter(event: KeyboardEvent): void {
+    this.filterService.setTextFilter((event.target as HTMLInputElement).value);
   }
   public addStarFilter(filterName: string): void {
-    if (filterName === 'All') {
-      this.star = this.star.length < 3 ? initialStarValue : [];
-    } else {
-      if (this.star.includes(filterName)) {
-        this.star = this.star.filter(
-          (starVal: string) => starVal !== filterName
-        );
-      } else {
-        this.star.push(filterName);
-      }
-    }
-    this.filter();
+    this.filterService.setStarFilter(filterName);
   }
   public trackByFn(_i: number, star: string): string {
     return star;

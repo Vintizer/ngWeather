@@ -1,7 +1,9 @@
+import { FilterService } from './../../services/filter.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { IHotel, IHotelView } from './../../models/hotel';
-import { FavoriteServiceService } from './../../services/favorite-service.service';
+import { FavoriteService } from './../../services/favorite-service.service';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-list',
@@ -12,33 +14,63 @@ export class ListComponent implements OnInit {
   @Input() public hotels: IHotel[] = [];
   @Input() public activeHotel: IHotel;
   @Input() public isLoaded: boolean;
-  @Input() public starFilter: string[];
-  @Input() public textFilter: string;
+
   @Output() public setActive: EventEmitter<IHotel> = new EventEmitter();
   @Output() public favoriteAdded: EventEmitter<true> = new EventEmitter();
 
-  public constructor(private favService: FavoriteServiceService) {}
+  public starFilter: string[] = ['3', '4', '5'];
+  public textFilter: string;
 
-  public ngOnInit(): void {}
-  public setActiveHotel($event: MouseEvent, hotel: IHotel): void {
+  public constructor(
+    private favService: FavoriteService,
+    private notificationsService: NotificationsService,
+    private filterService: FilterService
+  ) {}
+
+  public ngOnInit(): void {
+    this.filterService.description.subscribe(
+      (filter: string) => (this.textFilter = filter)
+    );
+    this.filterService.starsEvent.subscribe((stars: string[]) => {
+      this.starFilter = stars;
+    });
+  }
+  public setActiveHotel(hotel: IHotel): void {
     this.setActive.emit(hotel);
   }
-  public addHotelToFavorites(hotelId: number, event: MouseEvent): void {
+  public addHotelToFavorites(curHotel: IHotel, event: MouseEvent): void {
     event.stopPropagation();
     const { title, id } = this.hotels.find(
-      (hotel: IHotel) => hotel.id === hotelId
+      (hotel: IHotel) => hotel.id === curHotel.id
     );
     const favoriteView: IHotelView = {
       title,
       id
     };
+    if (this.favService.isHotelInFavorite(favoriteView.id)) {
+      this.notificationsService.info('Your vote has been counted!', '', {
+        timeOut: 1000,
+        clickToClose: true,
+        animate: 'fade',
+        showProgressBar: false
+      });
+    } else {
+      this.notificationsService.success('Favorite added!', '', {
+        timeOut: 1000,
+        clickToClose: true,
+        animate: 'fade',
+        showProgressBar: false
+      });
+    }
     this.favService.clickFavorite(favoriteView);
-    this.favoriteAdded.emit(true);
   }
   public trackHotelsByFn(_i: number, hotel: IHotel): number {
     return hotel.id;
   }
   public trackPicturesByFn(_i: number, src: string): string {
     return src;
+  }
+  public isHotelInFavorite(hotel: IHotel): boolean {
+    return this.favService.isHotelInFavorite(hotel.id);
   }
 }

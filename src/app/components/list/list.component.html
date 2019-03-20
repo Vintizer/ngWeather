@@ -1,4 +1,5 @@
 <div class="list-group" *loadElse="hotels.length || isLoaded">
+  
   <div class="row align-items-center" *ngIf="activeHotel">
     <img src="{{ activeHotel.picture }}" class="hotelImg rounded mx-auto d-block" alt="{{ activeHotel.description }}" />
   </div>
@@ -6,7 +7,7 @@
   <div class="row">
     <a
       *ngFor="let hotel of hotels | star: starFilter | hotelText: textFilter; odd as odd; trackBy:trackHotelsByFn"
-      (click)="setActiveHotel($event, hotel)"
+      (click)="setActiveHotel(hotel)"
       class="list-group-item list-group-item-action"
       [ngClass]="{ active: activeHotel === hotel, 'list-group-item-secondary': odd && activeHotel !== hotel }"
     >
@@ -17,7 +18,7 @@
         </div>
         <div class="row">
           <div class="col">
-            <p class="mb-1">{{ hotel.description }}</p>
+            <p class="mb-1">{{ hotel.description }} STARS {{hotel.stars}}</p>
           </div>
           <div class="col">
             <img
@@ -28,8 +29,8 @@
           </div>
         </div>
       </div>
-      <button (click)="addHotelToFavorites(hotel.id, $event)" class="btn btn-success">
-        Add to favorites
+      <button (click)="addHotelToFavorites(hotel, $event)" class="btn" [ngClass]="{'btn-warning': isHotelInFavorite(hotel), 'btn-success': !isHotelInFavorite(hotel)}" >
+        {{isHotelInFavorite(hotel) ? 'Vote for this hotel' : 'Add to favorites'}}
       </button>
     </a>
   </div>
