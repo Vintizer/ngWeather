@@ -16,6 +16,7 @@ export class FilterService {
   }
 
   public setStarFilter(star: string): void {
+    console.log('setStarFilter: ', star);
     if (star === 'All') {
       this.stars = this.stars.length < 3 ? initialStarValue : [];
     } else {

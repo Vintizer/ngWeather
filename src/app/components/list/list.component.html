@@ -1,24 +1,24 @@
 <div class="list-group" *loadElse="hotels.length || isLoaded">
-  
+
   <div class="row align-items-center" *ngIf="activeHotel">
     <img src="{{ activeHotel.picture }}" class="hotelImg rounded mx-auto d-block" alt="{{ activeHotel.description }}" />
   </div>
   <br />
   <div class="row">
     <a
-      *ngFor="let hotel of hotels | star: starFilter | hotelText: textFilter; odd as odd; trackBy:trackHotelsByFn"
+      *ngFor="let hotel of hotels | star | hotelText; odd as odd; trackBy:trackHotelsByFn"
       (click)="setActiveHotel(hotel)"
       class="list-group-item list-group-item-action"
       [ngClass]="{ active: activeHotel === hotel, 'list-group-item-secondary': odd && activeHotel !== hotel }"
     >
       <div class="container">
         <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">{{ hotel.address }}</h5>
+          <h5 class="mb-1">{{ hotel.title | highliter }}</h5>
           <small>{{ hotel.phone }}</small>
         </div>
         <div class="row">
           <div class="col">
-            <p class="mb-1">{{ hotel.description }} STARS {{hotel.stars}}</p>
+            <p class="mb-1"><app-text-highlight [text]="hotel.description | highliter"></app-text-highlight> </p>
           </div>
           <div class="col">
             <img
