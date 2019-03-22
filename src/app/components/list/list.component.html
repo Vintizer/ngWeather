@@ -61,8 +61,7 @@
       </button>
     </a>
   </div>
-  <div class="list-group" *ngIf="!isHotelsFiltered">
+  <div class="list-group" *ngIf="!(hotels | filter).length">
     No valid hotels for your filters
-    {{isHotelsFiltered}}
   </div>
 </div>

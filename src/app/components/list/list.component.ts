@@ -16,7 +16,6 @@ export class ListComponent implements OnInit {
 
   @Output() public setActive: EventEmitter<IHotel> = new EventEmitter();
   @Output() public favoriteAdded: EventEmitter<true> = new EventEmitter();
-  public isHotelsFiltered: boolean = false;
 
   public constructor(
     private favService: FavoriteService,
