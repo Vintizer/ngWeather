@@ -34,6 +34,6 @@ import { HotelsComponent } from '../components/hotels/hotels.component';
   imports: [CommonModule, MatCardModule, FontAwesomeModule],
   exports: [HotelsComponent],
   entryComponents: [LoadingComponent],
-  providers: [FavoriteService, FilterService]
+  providers: [FavoriteService, FilterService, FilterPipe]
 })
 export class HotelsModule {}

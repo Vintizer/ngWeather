@@ -1,31 +1,39 @@
-import { FilterService } from './../../services/filter.service';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { NotificationsService } from 'angular2-notifications';
 
 import { IHotel, IHotelView } from './../../models/hotel';
+import { FilterPipe } from './../../pipes/filter.pipe';
 import { FavoriteService } from './../../services/favorite-service.service';
-import { NotificationsService } from 'angular2-notifications';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css']
 })
-export class ListComponent implements OnInit {
+export class ListComponent implements OnInit, OnDestroy {
   @Input() public hotels: IHotel[] = [];
   @Input() public activeHotel: IHotel;
   @Input() public isLoaded: boolean;
 
   @Output() public setActive: EventEmitter<IHotel> = new EventEmitter();
   @Output() public favoriteAdded: EventEmitter<true> = new EventEmitter();
-
+  public isHotelsFiltered: boolean = false;
+  private subscription: Subscription;
 
   public constructor(
     private favService: FavoriteService,
     private notificationsService: NotificationsService,
+    private pipe: FilterPipe
   ) {}
 
-  public ngOnInit(): void {  }
+  public ngOnInit(): void {
+    this.subscription = this.pipe.filterEvent.subscribe((listLength: number) => {
+      console.log('listLength: ', listLength);
+      this.isHotelsFiltered = Boolean(listLength);
+    });
+    console.log('this.pipe.filterEvent: ', this.pipe.filterEvent);
+  }
   public setActiveHotel(hotel: IHotel): void {
     this.setActive.emit(hotel);
   }
@@ -63,5 +71,8 @@ export class ListComponent implements OnInit {
   }
   public isHotelInFavorite(hotel: IHotel): boolean {
     return this.favService.isHotelInFavorite(hotel.id);
+  }
+  public ngOnDestroy(): void {
+  this.subscription.unsubscribe();
   }
 }
