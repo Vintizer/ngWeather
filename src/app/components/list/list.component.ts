@@ -4,6 +4,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IHotel, IHotelView } from './../../models/hotel';
 import { FavoriteService } from './../../services/favorite-service.service';
 import { NotificationsService } from 'angular2-notifications';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-list',
@@ -18,23 +19,13 @@ export class ListComponent implements OnInit {
   @Output() public setActive: EventEmitter<IHotel> = new EventEmitter();
   @Output() public favoriteAdded: EventEmitter<true> = new EventEmitter();
 
-  public starFilter: string[] = ['3', '4', '5'];
-  public textFilter: string;
 
   public constructor(
     private favService: FavoriteService,
     private notificationsService: NotificationsService,
-    private filterService: FilterService
   ) {}
 
-  public ngOnInit(): void {
-    this.filterService.description.subscribe(
-      (filter: string) => (this.textFilter = filter)
-    );
-    this.filterService.starsEvent.subscribe((stars: string[]) => {
-      this.starFilter = stars;
-    });
-  }
+  public ngOnInit(): void {  }
   public setActiveHotel(hotel: IHotel): void {
     this.setActive.emit(hotel);
   }

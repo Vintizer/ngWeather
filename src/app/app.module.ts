@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 
 import { AppComponent } from './app.component';
-import { HotelsModule } from './hotels/hotels.module';
+import { HotelsModule } from './modules/hotels.module';
 
 @NgModule({
   declarations: [AppComponent],

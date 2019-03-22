@@ -1,1 +1,3 @@
-{{text}}
+<p>
+    <span *ngFor="let data of dataArray" [ngClass]="{highlight: data.isHighlight}">{{data.text}}</span>
+</p>

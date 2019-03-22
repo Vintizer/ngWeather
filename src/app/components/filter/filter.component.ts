@@ -1,7 +1,8 @@
-import { FilterService } from './../../services/filter.service';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Subscription } from 'rxjs';
+
 import { IFilter } from './../../models/hotel';
-import { Component, OnInit, Output } from '@angular/core';
-import { EventEmitter } from '@angular/core';
+import { FilterService } from './../../services/filter.service';
 
 const initialStarValue: string[] = ['3', '4', '5'];
 
@@ -10,14 +11,15 @@ const initialStarValue: string[] = ['3', '4', '5'];
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.css']
 })
-export class FilterComponent implements OnInit {
+export class FilterComponent implements OnInit, OnDestroy {
   @Output() public filterChange: EventEmitter<IFilter> = new EventEmitter();
   public star: string[] = initialStarValue;
+  private subscription: Subscription;
 
   public constructor(private filterService: FilterService) {}
 
   public ngOnInit(): void {
-    this.filterService.starsEvent.subscribe(
+    this.subscription = this.filterService.starsEvent.subscribe(
       (stars: string[]) => (this.star = stars)
     );
   }
@@ -29,5 +31,8 @@ export class FilterComponent implements OnInit {
   }
   public trackByFn(_i: number, star: string): string {
     return star;
+  }
+  public ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

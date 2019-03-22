@@ -8,7 +8,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 
-import { LoadingComponent } from './../components/loading/loading.component';
+import { LoadingComponent } from '../components/loading/loading.component';
 
 @Directive({
   selector: '[loadElse]'

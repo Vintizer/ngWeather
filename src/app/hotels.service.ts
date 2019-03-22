@@ -10,7 +10,7 @@ import { IHotel } from './models/hotel';
 export class HotelsService {
   public constructor() { }
   public getHotels(): Observable<IHotel[]> {
-    return of(hotelsData).pipe(delay(3000)) ;
+    return of(hotelsData).pipe(delay(300)) ;
   }
 }
 const hotelsData: IHotel[] = [
