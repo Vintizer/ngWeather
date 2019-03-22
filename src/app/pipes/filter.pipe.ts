@@ -11,7 +11,6 @@ import { FilterService } from './../services/filter.service';
 export class FilterPipe implements PipeTransform, OnDestroy {
   public filterText: string = '';
   public starFilter: string[] = ['3', '4', '5'];
-  public filterEvent: EventEmitter<number> = new EventEmitter();
   private subscription: Subscription;
 
   public constructor(private filterService: FilterService) {
@@ -28,13 +27,10 @@ export class FilterPipe implements PipeTransform, OnDestroy {
     this.subscription.add(starSubscription);
   }
   public transform(value: IHotel[]): IHotel[] {
-    console.log('transform: ');
     if (!value || (!this.filterText && this.starFilter.length === 3)) {
-      this.filterEvent.emit(value.length);
-      console.log('value.length: ', value.length);
       return value;
     }
-    const filtered: IHotel[] =  value.filter((hotel: IHotel) => {
+    const filtered: IHotel[] = value.filter((hotel: IHotel) => {
       const isStarEquals: boolean = this.starFilter.includes(
         hotel.stars.toString()
       );
@@ -45,8 +41,6 @@ export class FilterPipe implements PipeTransform, OnDestroy {
         hotel.title.toUpperCase().includes(this.filterText.toUpperCase());
       return isStarEquals && isTextEqual;
     });
-    console.log('filtered.length: ', filtered.length);
-    this.filterEvent.emit(filtered.length);
     return filtered;
   }
   public ngOnDestroy(): void {
