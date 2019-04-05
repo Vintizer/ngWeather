@@ -325,6 +325,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
+@angular/material/tooltip
+
+@angular/material/core
+
+@angular/material/form-field
+
+@angular/forms
+MIT
+
+@angular/material/select
+
+@angular/material/button
+
+@angular/material/paginator
+
 @fortawesome/fontawesome-svg-core
 MIT
 Font Awesome Free License
