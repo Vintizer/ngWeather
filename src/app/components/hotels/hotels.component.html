@@ -1,7 +1,4 @@
 <div class="container">
-  <div class="row justify-content-center">
-    <app-filter></app-filter>
-  </div>
   <div class="row justify-content-around">
     <div class="col-5">
       <app-list
@@ -12,9 +9,19 @@
       ></app-list>
     </div>
     <div class="col-5">
-        <div class="row justify-content-around align-content-center">
-            <div class="col-6">
-              <app-weather [weather]="activeHotel?.weather"></app-weather>
+      <div class="row justify-content-center">
+        <app-filter></app-filter>
+      </div>
+      <div class="row justify-content-center mb-3">
+        <app-active-hotel-photo
+          *ngIf="activeHotel"
+          [src]="activeHotel?.picture"
+          [description]="activeHotel?.description"
+        ></app-active-hotel-photo>
+      </div>
+      <div class="row justify-content-around align-content-center">
+        <div class="col-6">
+          <app-weather [weather]="activeHotel?.weather"></app-weather>
         </div>
         <div class="col-6">
           <app-profile [profile]="activeHotel?.profile"></app-profile>

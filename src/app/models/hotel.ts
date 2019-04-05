@@ -44,3 +44,14 @@ export interface IHiglight {
   text: string;
   isHighlight: boolean;
 }
+export enum ResponseType {
+  add,
+  remove,
+  vote,
+  error,
+  initialize = 'initialize'
+}
+export interface IJsonResponse {
+  data: IFavoriteView[];
+  type: ResponseType;
+}

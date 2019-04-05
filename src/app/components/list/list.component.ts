@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { NotificationsService } from 'angular2-notifications';
+import { HotelsService } from 'src/app/hotels.service';
 
 import { IHotel, IHotelView } from './../../models/hotel';
 import { FavoriteService } from './../../services/favorite-service.service';
@@ -16,13 +16,23 @@ export class ListComponent implements OnInit {
 
   @Output() public setActive: EventEmitter<IHotel> = new EventEmitter();
   @Output() public favoriteAdded: EventEmitter<true> = new EventEmitter();
+  public hotelsLength: number;
+  public pageIndex: number = 0;
+  public pageSize: number = 20;
 
   public constructor(
     private favService: FavoriteService,
-    private notificationsService: NotificationsService,
+    private hotelsService: HotelsService
   ) {}
 
-  public ngOnInit(): void {  }
+  public ngOnInit(): void {
+    this.hotelsService.getHotels(this.pageIndex, this.pageSize);
+    this.hotelsService
+      .getAllHotels()
+      .subscribe(
+        (hotelsArray: IHotel[]) => (this.hotelsLength = hotelsArray.length)
+      );
+  }
   public setActiveHotel(hotel: IHotel): void {
     this.setActive.emit(hotel);
   }
@@ -35,21 +45,6 @@ export class ListComponent implements OnInit {
       title,
       id
     };
-    if (this.favService.isHotelInFavorite(favoriteView.id)) {
-      this.notificationsService.info('Your vote has been counted!', '', {
-        timeOut: 1000,
-        clickToClose: true,
-        animate: 'fade',
-        showProgressBar: false
-      });
-    } else {
-      this.notificationsService.success('Favorite added!', '', {
-        timeOut: 1000,
-        clickToClose: true,
-        animate: 'fade',
-        showProgressBar: false
-      });
-    }
     this.favService.clickFavorite(favoriteView);
   }
   public trackHotelsByFn(_i: number, hotel: IHotel): number {
@@ -60,5 +55,9 @@ export class ListComponent implements OnInit {
   }
   public isHotelInFavorite(hotel: IHotel): boolean {
     return this.favService.isHotelInFavorite(hotel.id);
+  }
+  public getServerData(e: any): void {
+    console.log('e: ', e);
+    this.hotelsService.getHotels(e.pageIndex, e.pageSize);
   }
 }

@@ -1,10 +1,14 @@
 <div class="list-group" *loadElse="hotels.length || isLoaded">
-  <div class="row align-items-center" *ngIf="activeHotel">
-    <img
-      src="{{ activeHotel.picture }}"
-      class="hotelImg rounded mx-auto d-block"
-      alt="{{ activeHotel.description }}"
-    />
+  <div class="row align-items-center">
+    <mat-paginator
+      *ngIf="hotelsLength"
+      #paginator
+      [length]="hotelsLength"
+      [pageIndex]="pageIndex"
+      [pageSize]="pageSize"
+      (page)="getServerData($event)"
+    >
+    </mat-paginator>
   </div>
   <br />
   <div class="row">
@@ -24,9 +28,7 @@
       <div class="container">
         <div class="d-flex w-100 justify-content-between">
           <h5 class="mb-1">
-            <app-text-highlight
-              [text]="hotel.title"
-            ></app-text-highlight>
+            <app-text-highlight [text]="hotel.title"></app-text-highlight>
           </h5>
           <small>{{ hotel.phone }}</small>
         </div>

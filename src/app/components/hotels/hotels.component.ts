@@ -20,7 +20,7 @@ export class HotelsComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.subscription = this.hotelsService
-      .getHotels()
+      .hotels$
       .subscribe((data: IHotel[]) => {
         this.hotels = data;
         this.filteredHotels = data;
@@ -36,4 +36,5 @@ export class HotelsComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
+
 }
