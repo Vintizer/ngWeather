@@ -17,6 +17,7 @@ export class ListComponent implements OnInit {
   @Output() public setActive: EventEmitter<IHotel> = new EventEmitter();
   @Output() public favoriteAdded: EventEmitter<true> = new EventEmitter();
   public hotelsLength: number;
+  public isAdmin: boolean;
   public pageIndex: number = 0;
   public pageSize: number = 20;
 
@@ -27,11 +28,14 @@ export class ListComponent implements OnInit {
 
   public ngOnInit(): void {
     this.hotelsService.getHotels(this.pageIndex, this.pageSize);
+    this.hotelsService.getAllHotels();
     this.hotelsService
-      .getAllHotels()
+      .allHotels$
       .subscribe(
-        (hotelsArray: IHotel[]) => (this.hotelsLength = hotelsArray.length)
+        (hotelsArray: IHotel[]) => {
+          this.hotelsLength = hotelsArray.length; }
       );
+    this.isAdmin = Boolean(sessionStorage.getItem('isAdmin'));
   }
   public setActiveHotel(hotel: IHotel): void {
     this.setActive.emit(hotel);
@@ -57,7 +61,10 @@ export class ListComponent implements OnInit {
     return this.favService.isHotelInFavorite(hotel.id);
   }
   public getServerData(e: any): void {
-    console.log('e: ', e);
     this.hotelsService.getHotels(e.pageIndex, e.pageSize);
+  }
+  public removeHotel(id: number, event: MouseEvent): void {
+    event.stopPropagation();
+    this.hotelsService.removeHotel(id);
   }
 }

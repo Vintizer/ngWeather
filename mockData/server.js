@@ -8,7 +8,6 @@ function getRandom(max){
     return Math.floor(Math.random() * max);
 }
 function getRandomArr(array) {
-    console.log('array: ', array);
     const max = array.length;
     const randVal = getRandom(max);
     return array[randVal];

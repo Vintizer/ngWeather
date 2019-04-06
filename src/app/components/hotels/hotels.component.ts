@@ -14,20 +14,22 @@ export class HotelsComponent implements OnInit, OnDestroy {
   public activeHotel: IHotel;
   public filteredHotels: IHotel[] = this.hotels;
   public isFirstLoadDone: boolean = false;
+  public isAdminVal: boolean;
   private subscription: Subscription;
 
   public constructor(private hotelsService: HotelsService) {}
 
   public ngOnInit(): void {
-    this.subscription = this.hotelsService
-      .hotels$
-      .subscribe((data: IHotel[]) => {
+    this.subscription = this.hotelsService.hotels$.subscribe(
+      (data: IHotel[]) => {
         this.hotels = data;
         this.filteredHotels = data;
         this.activeHotel = data[0];
         this.isFirstLoadDone = true;
-      });
+      }
+    );
     this.activeHotel = this.hotels.find((hotel: IHotel) => hotel.id === 0);
+    this.isAdminVal = Boolean(sessionStorage.getItem('isAdmin'));
   }
 
   public setActiveHotel(hotel: IHotel): void {
@@ -36,5 +38,12 @@ export class HotelsComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-
+  public iAdmin(): void {
+    if (this.isAdminVal) {
+      sessionStorage.removeItem('isAdmin');
+    } else {
+      sessionStorage.setItem('isAdmin', 'IAmASuperAdmin');
+    }
+    location.reload();
+  }
 }
