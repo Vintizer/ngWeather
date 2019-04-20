@@ -1,6 +1,9 @@
 .bg-gray {
     background-color: gray
 }
+.activeHotel {
+    background-color: rgb(139, 233, 236)
+}
 .hotelImg {
     max-width: 100%;
 }

@@ -21,14 +21,18 @@
       (click)="setActiveHotel(hotel)"
       class="list-group-item list-group-item-action"
       [ngClass]="{
-        active: activeHotel === hotel,
+        'activeHotel': activeHotel === hotel,
         'list-group-item-secondary': odd && activeHotel !== hotel
       }"
     >
       <div class="container">
         <div class="d-flex w-100 justify-content-between">
           <h5 class="mb-1">
-            <app-text-highlight [text]="hotel.title"></app-text-highlight>
+            <a
+              [routerLink]="['/hotels', hotel.id]"
+            >
+              <app-text-highlight [text]="hotel.title"></app-text-highlight>
+            </a>
           </h5>
           <small>{{ hotel.phone }}</small>
         </div>
@@ -49,7 +53,13 @@
           </div>
         </div>
       </div>
-      <button class="btn btn-danger mr-2" *ngIf="isAdmin" (click)="removeHotel(hotel.id, $event)">Remove hotel</button>
+      <button
+        class="btn btn-danger mr-2"
+        *ngIf="isAdmin"
+        (click)="removeHotel(hotel.id, $event)"
+      >
+        Remove hotel
+      </button>
       <button
         (click)="addHotelToFavorites(hotel, $event)"
         class="btn"

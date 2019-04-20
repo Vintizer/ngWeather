@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 import { environment } from './../environments/environment';
 import { IHotel } from './models/hotel';
@@ -17,6 +17,10 @@ export class HotelsService {
     this.http
       .get(`${this.configUrl}hotels?_page=${page + 1}&_limit=${limit}`)
       .subscribe((hotels: IHotel[]) => this.hotels$.next(hotels));
+  }
+  public getHotelById(id: string): Observable<IHotel> {
+    return this.http
+      .get(`${this.configUrl}hotels/${id}`) as Observable<IHotel>;
   }
   public getAllHotels(): void {
     this.http

@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
@@ -18,6 +19,11 @@ import { FilterPipe } from '../pipes/filter.pipe';
 import { FavoriteService } from '../services/favorite-service.service';
 import { FilterService } from '../services/filter.service';
 import { ActiveHotelPhotoComponent } from '../components/active-hotel-photo/active-hotel-photo.component';
+import { HotelDetailsComponent } from '../components/hotel-details/hotel-details.component';
+import { HotelCommentsComponent } from '../components/hotel-comments/hotel-comments.component';
+import { HotelContactsComponent } from '../components/hotel-contacts/hotel-contacts.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -32,9 +38,12 @@ import { ActiveHotelPhotoComponent } from '../components/active-hotel-photo/acti
     LoadingDirective,
     TextHighlightComponent,
     FilterPipe,
-    ActiveHotelPhotoComponent
+    ActiveHotelPhotoComponent,
+    HotelDetailsComponent,
+    HotelCommentsComponent,
+    HotelContactsComponent
   ],
-  imports: [CommonModule, MatCardModule, FontAwesomeModule, MatPaginatorModule],
+  imports: [CommonModule, MatCardModule, FontAwesomeModule, MatPaginatorModule, RouterModule, ReactiveFormsModule],
   exports: [HotelsComponent],
   entryComponents: [LoadingComponent],
   providers: [FavoriteService, FilterService, FilterPipe]

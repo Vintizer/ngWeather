@@ -1,0 +1,16 @@
+<div class="card text-center" *ngIf="hotel">
+  <div class="card-header">
+    {{hotel.title}}
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Address: {{hotel.address}}</h5>
+    <p class="card-text">
+      {{hotel.description}}
+    </p>
+    <a [routerLink]="['/hotels', hotel.id, 'comments']" class="btn btn-primary">Comments</a>
+    <a [routerLink]="['/hotels', hotel.id, 'contacts']" class="btn btn-primary">Contacts</a>
+  </div>
+  <div class="card-footer text-muted">
+    <img src="{{hotel.picture}}">
+  </div>
+</div>
