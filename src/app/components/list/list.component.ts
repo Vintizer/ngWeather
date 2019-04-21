@@ -1,3 +1,4 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HotelsService } from 'src/app/hotels.service';
 
@@ -23,10 +24,14 @@ export class ListComponent implements OnInit {
 
   public constructor(
     private favService: FavoriteService,
-    private hotelsService: HotelsService
+    private hotelsService: HotelsService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   public ngOnInit(): void {
+    this.pageIndex = +this.route.snapshot.paramMap.get('pageIndex');
+    this.pageSize = +this.route.snapshot.paramMap.get('pageSize');
     this.hotelsService.getHotels(this.pageIndex, this.pageSize);
     this.hotelsService.getAllHotels();
     this.hotelsService
@@ -61,6 +66,9 @@ export class ListComponent implements OnInit {
     return this.favService.isHotelInFavorite(hotel.id);
   }
   public getServerData(e: any): void {
+    // console.log('e: ', e);
+    const {pageIndex, pageSize} = e;
+    this.router.navigate(['/hotels', {pageIndex, pageSize}]);
     this.hotelsService.getHotels(e.pageIndex, e.pageSize);
   }
   public removeHotel(id: number, event: MouseEvent): void {

@@ -1,3 +1,4 @@
+import { ContactModule } from './contact/contact.module';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -21,9 +22,6 @@ import { FilterService } from '../services/filter.service';
 import { ActiveHotelPhotoComponent } from '../components/active-hotel-photo/active-hotel-photo.component';
 import { HotelDetailsComponent } from '../components/hotel-details/hotel-details.component';
 import { HotelCommentsComponent } from '../components/hotel-comments/hotel-comments.component';
-import { HotelContactsComponent } from '../components/hotel-contacts/hotel-contacts.component';
-import { ReactiveFormsModule } from '@angular/forms';
-
 
 @NgModule({
   declarations: [
@@ -40,10 +38,16 @@ import { ReactiveFormsModule } from '@angular/forms';
     FilterPipe,
     ActiveHotelPhotoComponent,
     HotelDetailsComponent,
-    HotelCommentsComponent,
-    HotelContactsComponent
+    HotelCommentsComponent
   ],
-  imports: [CommonModule, MatCardModule, FontAwesomeModule, MatPaginatorModule, RouterModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    MatCardModule,
+    FontAwesomeModule,
+    MatPaginatorModule,
+    RouterModule,
+    ContactModule
+  ],
   exports: [HotelsComponent],
   entryComponents: [LoadingComponent],
   providers: [FavoriteService, FilterService, FilterPipe]

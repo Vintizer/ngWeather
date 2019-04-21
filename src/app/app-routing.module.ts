@@ -1,6 +1,6 @@
 import { ContactDeactivateGuard } from './guards/contact-deactivate.guard';
 import { UsersGuard } from './guards/users.guard';
-import { HotelContactsComponent } from './components/hotel-contacts/hotel-contacts.component';
+// import { HotelContactsComponent } from './components/hotel-contacts/hotel-contacts.component';
 import { HotelCommentsComponent } from './components/hotel-comments/hotel-comments.component';
 import { HotelDetailsComponent } from './components/hotel-details/hotel-details.component';
 import { HotelsComponent } from './components/hotels/hotels.component';
@@ -21,12 +21,13 @@ export const routes: Routes = [
   },
   {
     path: 'users',
-    component: AboutComponent,
+    loadChildren: './modules/users/users.module#UsersModule',
     canActivate: [UsersGuard]
   },
   {
     path: 'contact',
-    component: AboutComponent
+    loadChildren: './modules/contact/contact.module#ContactModule',
+    canDeactivate: [ContactDeactivateGuard]
   },
   {
     path: 'hotels',
@@ -42,8 +43,7 @@ export const routes: Routes = [
   },
   {
     path: 'hotels/:id/contacts',
-    component: HotelContactsComponent,
-    canDeactivate: [ContactDeactivateGuard]
+    redirectTo: 'contact',
   },
   {
     path: '',
