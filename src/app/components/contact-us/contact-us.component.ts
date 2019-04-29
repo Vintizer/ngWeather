@@ -10,7 +10,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ContactUsComponent implements OnInit {
   public commentForm: FormGroup;
-
   public constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -24,12 +23,12 @@ export class ContactUsComponent implements OnInit {
     });
   }
   public submit(): void {
+    setTimeout(() => this.commentForm.reset(), 1000);
   }
   public isFormEdit(): boolean {
     return this.commentForm.dirty;
   }
   public cancel(): void {
-    const hotelId: string = (this.ar.url as BehaviorSubject<any>).getValue()[1].path;
-    this.router.navigate(['/hotels', hotelId]);
+    this.router.navigate(['/hotels']);
   }
 }

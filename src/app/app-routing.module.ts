@@ -9,11 +9,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'hotels',
-    pathMatch: 'full'
-  },
-  {
     path: 'about',
     component: AboutComponent
   },
@@ -31,13 +26,18 @@ const routes: Routes = [
     loadChildren: './modules/contact/contact.module#ContactModule',
   },
   {
+    path: '',
+    redirectTo: 'hotels',
+    pathMatch: 'full'
+  },
+  {
     path: '**',
     component: NotFoundComponent
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {enableTracing: true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

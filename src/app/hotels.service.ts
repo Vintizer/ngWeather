@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
 import { environment } from './../environments/environment';
-import { IHotel } from './models/hotel';
+import { IHotel, IHotelComment } from './models/hotel';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +21,10 @@ export class HotelsService {
   public getHotelById(id: string): Observable<IHotel> {
     return this.http
       .get(`${this.configUrl}hotels/${id}`) as Observable<IHotel>;
+  }
+  public getCommentsById(id: string): Observable<IHotelComment[]> {
+    return this.http
+      .get(`${this.configUrl}comments?hotel_id=${id}`) as Observable<IHotelComment[]>;
   }
   public getAllHotels(): void {
     this.http

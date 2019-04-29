@@ -36,6 +36,10 @@ export interface IHotelView {
   title: string;
   id: number;
 }
+export interface IHotelComment {
+  hotel_id: string;
+  comment: string;
+}
 export interface IHiglightPipe {
   value: string;
   filter: string;

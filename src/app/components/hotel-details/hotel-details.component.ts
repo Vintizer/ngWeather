@@ -16,9 +16,11 @@ export class HotelDetailsComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    const curHotelId: string = this.ar.snapshot.paramMap.get('id');
-    this.hotelsService
-      .getHotelById(curHotelId)
-      .subscribe((hotel: IHotel) => (this.hotel = hotel));
+    this.ar.params.subscribe(param => {
+      const curHotelId: string = this.ar.snapshot.paramMap.get('id');
+      this.hotelsService
+        .getHotelById(curHotelId)
+        .subscribe((hotel: IHotel) => (this.hotel = hotel));
+    });
   }
 }

@@ -1,3 +1,4 @@
+import { ContactModule } from './../modules/contact/contact.module';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';

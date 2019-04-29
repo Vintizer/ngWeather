@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  // configUrl: 'https://api.jsonbin.io/b/5cc743b545598976c3d7973f'
   configUrl: 'http://localhost:3000/'
 };
 
