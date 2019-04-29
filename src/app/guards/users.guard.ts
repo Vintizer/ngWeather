@@ -20,7 +20,7 @@ export class UsersGuard implements CanActivate {
     if (this.isAdminVal) {
       return true;
     } else {
-      this.router.navigate(['/']);
+      this.router.navigate(['']);
       return false;
     }
   }

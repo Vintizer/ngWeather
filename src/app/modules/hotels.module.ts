@@ -1,5 +1,5 @@
 import { ContactModule } from './contact/contact.module';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
@@ -22,7 +22,25 @@ import { FilterService } from '../services/filter.service';
 import { ActiveHotelPhotoComponent } from '../components/active-hotel-photo/active-hotel-photo.component';
 import { HotelDetailsComponent } from '../components/hotel-details/hotel-details.component';
 import { HotelCommentsComponent } from '../components/hotel-comments/hotel-comments.component';
+import { HotelContactsComponent } from '../components/hotel-contacts/hotel-contacts.component';
 
+const routes: Routes = [
+  { path: '', component: HotelsComponent, pathMatch: 'full' },
+  {
+    path: ':id',
+    component: HotelDetailsComponent,
+    children: [
+      {
+        path: 'comments',
+        component: HotelCommentsComponent
+      },
+      {
+        path: 'contacts',
+        component: HotelContactsComponent
+      }
+    ]
+  }
+];
 @NgModule({
   declarations: [
     ListComponent,
@@ -38,17 +56,17 @@ import { HotelCommentsComponent } from '../components/hotel-comments/hotel-comme
     FilterPipe,
     ActiveHotelPhotoComponent,
     HotelDetailsComponent,
-    HotelCommentsComponent
+    HotelCommentsComponent,
+    HotelContactsComponent
   ],
   imports: [
     CommonModule,
     MatCardModule,
     FontAwesomeModule,
     MatPaginatorModule,
-    RouterModule,
-    ContactModule
+    ContactModule,
+    RouterModule.forChild(routes)
   ],
-  exports: [HotelsComponent],
   entryComponents: [LoadingComponent],
   providers: [FavoriteService, FilterService, FilterPipe]
 })

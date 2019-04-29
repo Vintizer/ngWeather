@@ -6,9 +6,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 
 import { AppComponent } from './app.component';
-import { HotelsModule } from './modules/hotels.module';
 import { ParamInterceptor } from './services/api.interceptor';
-import { AppRoutingModule, routes } from './app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { AboutComponent } from './components/about/about.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -17,12 +16,10 @@ import { NavbarComponent } from './components/navbar/navbar.component';
   declarations: [AppComponent, AboutComponent, NotFoundComponent, NavbarComponent],
   imports: [
     BrowserModule,
-    HotelsModule,
     BrowserAnimationsModule,
     SimpleNotificationsModule.forRoot(),
     HttpClientModule,
     AppRoutingModule,
-    RouterModule.forRoot(routes)
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

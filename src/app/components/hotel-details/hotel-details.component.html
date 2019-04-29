@@ -1,6 +1,7 @@
+<router-outlet></router-outlet>
 <div class="card text-center" *ngIf="hotel">
   <div class="card-header">
-    {{hotel.title}}
+    <a [routerLink]="['/hotels', hotel.id]">{{hotel.title}}</a>
   </div>
   <div class="card-body">
     <h5 class="card-title">Address: {{hotel.address}}</h5>
