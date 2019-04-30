@@ -1,10 +1,32 @@
-<form [formGroup]="commentForm">
-  <label>Your name:</label>
-  <input type="text" formControlName="name" />
-
-  <label>Your comment:</label>
-  <input type="text" formControlName="comment" />
-
-  <button class="btn btn-success" (click)="submit()">Submit</button>
-  <button class="btn btn-danger" (click)="cancel()">Cancel</button>
-</form>
+<div class="container">
+  <div class="row mt-3 d-flex justify-content-center">
+    <form [formGroup]="commentForm">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon3">Your name:</span>
+        </div>
+        <input
+          type="text"
+          class="form-control"
+          id="basic-url"
+          aria-describedby="basic-addon3"
+          formControlName="name"
+        />
+      </div>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Your comment:</span>
+        </div>
+        <textarea
+          class="form-control"
+          formControlName="comment"
+          aria-label="With textarea"
+        ></textarea>
+      </div>
+      <div class="btn-group d-flex justify-content-center mt-3" role="group" aria-label="Basic example">
+          <button type="button" class="btn btn-success" (click)="submit()">Submit</button>
+          <button type="button" class="btn btn-danger" (click)="cancel()">Cancel</button>
+        </div>
+    </form>
+  </div>
+</div>
