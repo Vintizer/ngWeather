@@ -1,3 +1,4 @@
+import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { ContactDeactivateGuard } from './guards/contact-deactivate.guard';
 import { UsersGuard } from './guards/users.guard';
 import { HotelCommentsComponent } from './components/hotel-comments/hotel-comments.component';
@@ -28,7 +29,7 @@ const routes: Routes = [
   },
   {
     path: 'contact',
-    loadChildren: './modules/contact/contact.module#ContactModule'
+    component: ContactUsComponent
   },
   {
     path: '**',

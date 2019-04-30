@@ -1,3 +1,5 @@
+import { ContactUsComponent } from './components/contact-us/contact-us.component';
+import { ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -12,13 +14,13 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
-  declarations: [AppComponent, AboutComponent, NotFoundComponent, NavbarComponent],
+  declarations: [AppComponent, ContactUsComponent, AboutComponent, NotFoundComponent, NavbarComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     SimpleNotificationsModule.forRoot(),
     HttpClientModule,
-    AppRoutingModule,
+    AppRoutingModule, ReactiveFormsModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
