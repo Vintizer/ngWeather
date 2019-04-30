@@ -15,9 +15,12 @@ export class ParamInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     if (req.method === 'DELETE') {
       const authToken: string = sessionStorage.getItem('isAdmin');
+      if (!authToken) {
+        return next.handle(req);
+      }
       const updatedRequest: HttpRequest<any> = req.clone({
-          headers: req.headers.set('Authorization', authToken)
-        });
+        headers: req.headers.set('Authorization', authToken)
+      });
       return next.handle(updatedRequest);
     } else {
       return next.handle(req);

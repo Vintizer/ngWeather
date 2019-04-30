@@ -4,7 +4,7 @@
     {{ hotel.title }}
     <p>
       <span class="badge badge-primary badge-pill mr-1">Voted {{ hotel.voted }}</span>
-      <a href="#" (click)="removeHotelFromFavorites(hotel.id)" class="badge badge-primary badge-pill">X</a>
+      <a href="#" (click)="removeHotelFromFavorites(hotel.id, $event)" class="badge badge-primary badge-pill">X</a>
     </p>
   </div>
 </div>

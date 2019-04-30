@@ -52,7 +52,8 @@ export class FavoriteHotelsComponent implements OnInit {
       this.favoriteHotels = favsAction.data;
     });
   }
-  public removeHotelFromFavorites(id: number): void {
+  public removeHotelFromFavorites(id: number, e: MouseEvent): void {
+    e.preventDefault();
     this.favService.removeFromFavorites(id);
   }
   public trackByFn(_index: number, hotel: IFavoriteView): number {
