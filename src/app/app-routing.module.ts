@@ -9,12 +9,17 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: 'hotels',
+    pathMatch: 'full'
+  },
+  {
     path: 'about',
     component: AboutComponent
   },
   {
     path: 'hotels',
-    loadChildren: './modules/hotels.module#HotelsModule',
+    loadChildren: './modules/hotels.module#HotelsModule'
   },
   {
     path: 'users',
@@ -23,12 +28,7 @@ const routes: Routes = [
   },
   {
     path: 'contact',
-    loadChildren: './modules/contact/contact.module#ContactModule',
-  },
-  {
-    path: '',
-    redirectTo: 'hotels',
-    pathMatch: 'full'
+    loadChildren: './modules/contact/contact.module#ContactModule'
   },
   {
     path: '**',
@@ -37,7 +37,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {enableTracing: true})],
+  imports: [RouterModule.forRoot(routes, { enableTracing: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

@@ -7,10 +7,9 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'c',
+    path: '',
     component: ContactUsComponent,
     canDeactivate: [ContactDeactivateGuard],
-    pathMatch: 'full'
   }
 ];
 @NgModule({
