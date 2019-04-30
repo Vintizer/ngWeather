@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  configUrl: 'http://localhost:3030/'
+  configUrl: 'https://agile-retreat-51594.herokuapp.com/'
 };
