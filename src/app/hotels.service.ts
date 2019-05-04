@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
@@ -17,6 +17,9 @@ export class HotelsService {
     this.http
       .get(`${this.configUrl}hotels?_page=${page + 1}&_limit=${limit}`)
       .subscribe((hotels: IHotel[]) => this.hotels$.next(hotels));
+  }
+  public getHotelsObservable(page: number = 0, limit: number = 20): Observable<IHotel[]> {
+    return this.http.get<IHotel[]>(`${this.configUrl}hotels?_page=${page + 1}&_limit=${limit}`);
   }
   public getHotelById(id: string): Observable<IHotel> {
     return this.http

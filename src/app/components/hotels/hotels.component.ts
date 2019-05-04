@@ -1,8 +1,11 @@
+import { HotelActions, LoadHotels } from './../../store/actions/hotel.actions';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
 
 import { HotelsService } from '../../hotels.service';
 import { IHotel } from '../../models/hotel';
+import { State } from './../../store/reducers/hotel.reducer';
 
 @Component({
   selector: 'app-hotels',
@@ -15,19 +18,24 @@ export class HotelsComponent implements OnInit, OnDestroy {
   public filteredHotels: IHotel[] = this.hotels;
   public isFirstLoadDone: boolean = false;
   public isAdminVal: boolean;
+  public hotels$: Observable<any>;
   private subscription: Subscription;
 
-  public constructor(private hotelsService: HotelsService) {}
+  public constructor(
+    private hotelsService: HotelsService,
+    private store: Store<State>
+  ) {}
 
   public ngOnInit(): void {
-    this.subscription = this.hotelsService.hotels$.subscribe(
-      (data: IHotel[]) => {
-        this.hotels = data;
-        this.filteredHotels = data;
-        this.activeHotel = data[0];
-        this.isFirstLoadDone = true;
-      }
-    );
+    // this.subscription = this.hotelsService.hotels$.subscribe(
+    //   (data: IHotel[]) => {
+    //     this.hotels = data;
+    //     this.filteredHotels = data;
+    //     this.activeHotel = data[0];
+    //     this.isFirstLoadDone = true;
+    //   }
+    // );
+    this.hotels$ = this.store.select('hotel', 'data');
     this.activeHotel = this.hotels.find((hotel: IHotel) => hotel.id === 0);
     this.isAdminVal = Boolean(sessionStorage.getItem('isAdmin'));
   }
@@ -45,5 +53,8 @@ export class HotelsComponent implements OnInit, OnDestroy {
       sessionStorage.setItem('isAdmin', 'IAmASuperAdmin');
     }
     location.reload();
+  }
+  clicker() {
+    this.store.dispatch(new LoadHotels());
   }
 }

@@ -12,7 +12,7 @@
     "cyclomatic-complexity": [
     true, 20],
     "max-classes-per-file": [
-    true, 1],
+    true, 5],
     "max-file-line-count": [
     true, 400],
     "max-line-length": [
