@@ -19,6 +19,8 @@ export class HotelsService {
       .subscribe((hotels: IHotel[]) => this.hotels$.next(hotels));
   }
   public getHotelsObservable(page: number = 0, limit: number = 20): Observable<IHotel[]> {
+    console.log('limit: ', limit);
+    console.log('page: ', page);
     return this.http.get<IHotel[]>(`${this.configUrl}hotels?_page=${page + 1}&_limit=${limit}`);
   }
   public getHotelById(id: string): Observable<IHotel> {

@@ -1,3 +1,6 @@
+import { LoadHotels } from './../../store/actions/hotel.actions';
+import { Store } from '@ngrx/store';
+import { State } from './../../store/reducers/hotel.reducer';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HotelsService } from 'src/app/hotels.service';
@@ -26,7 +29,8 @@ export class ListComponent implements OnInit {
     private favService: FavoriteService,
     private hotelsService: HotelsService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private store: Store<State>
   ) {}
 
   public ngOnInit(): void {
@@ -34,12 +38,9 @@ export class ListComponent implements OnInit {
     this.pageSize = +this.route.snapshot.paramMap.get('pageSize');
     this.hotelsService.getHotels(this.pageIndex, this.pageSize);
     this.hotelsService.getAllHotels();
-    this.hotelsService
-      .allHotels$
-      .subscribe(
-        (hotelsArray: IHotel[]) => {
-          this.hotelsLength = hotelsArray.length; }
-      );
+    this.hotelsService.allHotels$.subscribe((hotelsArray: IHotel[]) => {
+      this.hotelsLength = hotelsArray.length;
+    });
     this.isAdmin = Boolean(sessionStorage.getItem('isAdmin'));
   }
   public setActiveHotel(hotel: IHotel): void {
@@ -65,11 +66,10 @@ export class ListComponent implements OnInit {
   public isHotelInFavorite(hotel: IHotel): boolean {
     return this.favService.isHotelInFavorite(hotel.id);
   }
-  public getServerData(e: any): void {
-    // console.log('e: ', e);
-    const {pageIndex, pageSize} = e;
-    this.router.navigate(['/hotels', {pageIndex, pageSize}]);
-    this.hotelsService.getHotels(e.pageIndex, e.pageSize);
+  public goToPage(e: any): void {
+    const { pageIndex, pageSize } = e;
+    this.router.navigate(['/hotels', { pageIndex, pageSize }]);
+    this.store.dispatch(new LoadHotels({ page: pageIndex, limit: pageSize }));
   }
   public removeHotel(id: number, event: MouseEvent): void {
     event.stopPropagation();

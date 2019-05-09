@@ -1,10 +1,9 @@
 <div class="container">
-  <button (click)="clicker()" >click</button>
   <div class="row justify-content-around">
     <div class="col-5">
-      <app-list
+      <app-list *ngIf="filteredHotels" 
         (setActive)="setActiveHotel($event)"
-        [hotels]="hotels$ | async"
+        [hotels]="filteredHotels"
         [activeHotel]="activeHotel"
         [isLoaded]="isFirstLoadDone"
       ></app-list>

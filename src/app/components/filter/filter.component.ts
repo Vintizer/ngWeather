@@ -1,4 +1,17 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  HotelActions,
+  SetStarFilter,
+  SetTextFilter
+} from './../../store/actions/hotel.actions';
+import { Store } from '@ngrx/store';
+import { State } from './../../store/reducers/index';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { IFilter } from './../../models/hotel';
@@ -16,18 +29,26 @@ export class FilterComponent implements OnInit, OnDestroy {
   public star: string[] = initialStarValue;
   private subscription: Subscription;
 
-  public constructor(private filterService: FilterService) {}
+  public constructor(
+    private filterService: FilterService,
+    private store: Store<State>
+  ) {}
 
   public ngOnInit(): void {
+    // TODO
     this.subscription = this.filterService.starsEvent.subscribe(
       (stars: string[]) => (this.star = stars)
     );
   }
   public changeFilter(event: KeyboardEvent): void {
-    this.filterService.setTextFilter((event.target as HTMLInputElement).value);
+    this.store.dispatch(
+      new SetTextFilter((event.target as HTMLInputElement).value)
+    );
   }
   public addStarFilter(filterName: string): void {
-    this.filterService.setStarFilter(filterName);
+    this.store.dispatch(
+      new SetStarFilter(filterName)
+    );
   }
   public trackByFn(_i: number, star: string): string {
     return star;

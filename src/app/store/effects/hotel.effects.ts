@@ -14,9 +14,9 @@ export class HotelEffects {
   @Effect()
   public loadUsers$: Observable<LoadHotelsSuccess | LoadHotelsError> = this.actions$.pipe(
     ofType(HotelActionTypes.LoadHotels),
-    mergeMap(() => this.hotelsService.getHotelsObservable()
+    tap(console.log),
+    mergeMap(({payload}) => this.hotelsService.getHotelsObservable(payload.page, payload.limit)
         .pipe(
-          // switchMap((users: any[]) => [new LoadUsersSuccess(users), new LoadUsersSuccess2(users)])
           map((hotels: IHotel[]) => new LoadHotelsSuccess(hotels)),
           catchError((err: any) => of(new LoadHotelsError(err)))
         ))
