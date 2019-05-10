@@ -4,7 +4,7 @@ import {
   SetTextFilter
 } from './../../store/actions/hotel.actions';
 import { Store } from '@ngrx/store';
-import { State } from './../../store/reducers/index';
+import { IState } from './../../store/reducers/index';
 import {
   Component,
   EventEmitter,
@@ -31,7 +31,7 @@ export class FilterComponent implements OnInit, OnDestroy {
 
   public constructor(
     private filterService: FilterService,
-    private store: Store<State>
+    private store: Store<IState>
   ) {}
 
   public ngOnInit(): void {

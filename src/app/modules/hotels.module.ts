@@ -64,7 +64,6 @@ const routes: Routes = [
     MatCardModule,
     FontAwesomeModule,
     MatPaginatorModule,
-    ContactModule,
     RouterModule.forChild(routes)
   ],
   entryComponents: [LoadingComponent],

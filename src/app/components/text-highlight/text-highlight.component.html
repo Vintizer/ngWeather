@@ -1,6 +1,6 @@
 <p>
   <span
-    *ngFor="let data of dataArray"
+    *ngFor="let data of (dataArray | async)"
     [ngClass]="{ highlight: data.isHighlight }"
     >{{ data.text }}</span
   >

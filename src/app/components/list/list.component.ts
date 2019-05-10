@@ -1,6 +1,6 @@
 import { LoadHotels } from './../../store/actions/hotel.actions';
 import { Store } from '@ngrx/store';
-import { State } from './../../store/reducers/hotel.reducer';
+import { IHotelState } from './../../store/reducers/hotel.reducer';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HotelsService } from 'src/app/hotels.service';
@@ -30,7 +30,7 @@ export class ListComponent implements OnInit {
     private hotelsService: HotelsService,
     private router: Router,
     private route: ActivatedRoute,
-    private store: Store<State>
+    private store: Store<IHotelState>
   ) {}
 
   public ngOnInit(): void {

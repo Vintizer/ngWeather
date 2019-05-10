@@ -1,9 +1,9 @@
 <div class="container">
   <div class="row justify-content-around">
     <div class="col-5">
-      <app-list *ngIf="filteredHotels" 
+      <app-list 
         (setActive)="setActiveHotel($event)"
-        [hotels]="filteredHotels"
+        [hotels]="filteredHotels$ | async"
         [activeHotel]="activeHotel"
         [isLoaded]="isFirstLoadDone"
       ></app-list>

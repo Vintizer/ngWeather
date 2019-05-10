@@ -1,12 +1,12 @@
 import { ActivatedRoute } from '@angular/router';
 import { HotelActions, LoadHotels } from './../../store/actions/hotel.actions';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 
 import { HotelsService } from '../../hotels.service';
 import { IHotel } from '../../models/hotel';
-import { State } from './../../store/reducers/hotel.reducer';
+import { filteredHotelsSelector, IHotelState } from './../../store/reducers/hotel.reducer';
 import { combineLatest } from 'rxjs';
 
 @Component({
@@ -20,13 +20,13 @@ export class HotelsComponent implements OnInit, OnDestroy {
   public isFirstLoadDone: boolean = false;
   public isAdminVal: boolean;
   public hotels$: Observable<IHotel[]>;
-  public filteredHotels: IHotel[] = [];
+  public filteredHotels$: Observable<IHotel[]>;
   public filter$: Observable<any>;
   private subscription: Subscription;
 
   public constructor(
     private hotelsService: HotelsService,
-    private store: Store<State>,
+    private store: Store<IHotelState>,
     private ar: ActivatedRoute
   ) {}
 
@@ -34,7 +34,7 @@ export class HotelsComponent implements OnInit, OnDestroy {
     const pageParams: { pageIndex?: string; pageSize?: string } = (this.ar
       .params as BehaviorSubject<any>).value;
     const page: number = Number(pageParams.pageIndex || '0');
-    const limit: number = Number(pageParams.pageSize || '0');
+    const limit: number = Number(pageParams.pageSize || '20');
     // this.subscription = this.hotelsService.hotels$.subscribe(
     //   (data: IHotel[]) => {
     //     this.hotels = data;
@@ -45,31 +45,34 @@ export class HotelsComponent implements OnInit, OnDestroy {
     // );
     this.hotels$ = this.store.select('hotel', 'data');
     this.filter$ = this.store.select('hotel', 'filter');
-    combineLatest(
-      this.hotels$,
-      this.filter$,
-      (
-        hotels: IHotel[],
-        filter: {
-          text: string;
-          star: string[];
-        }
-      ) => {
-        return hotels.filter((hotel: IHotel) => {
-          const isStarEquals: boolean = filter.star.includes(
-            hotel.stars.toString()
-          );
-          const isTextEqual: boolean =
-            hotel.description
-              .toUpperCase()
-              .includes(filter.text.toUpperCase()) ||
-            hotel.title.toUpperCase().includes(filter.text.toUpperCase());
-          return isStarEquals && isTextEqual;
-        });
-      }
-    ).subscribe(
-      (filteredHotels: IHotel[]) => (this.filteredHotels = filteredHotels)
+    this.filteredHotels$ = this.store.pipe(
+      select(filteredHotelsSelector)
     );
+    // combineLatest(
+    //   this.hotels$,
+    //   this.filter$,
+    //   (
+    //     hotels: IHotel[],
+    //     filter: {
+    //       text: string;
+    //       star: string[];
+    //     }
+    //   ) => {
+    //     return hotels.filter((hotel: IHotel) => {
+    //       const isStarEquals: boolean = filter.star.includes(
+    //         hotel.stars.toString()
+    //       );
+    //       const isTextEqual: boolean =
+    //         hotel.description
+    //           .toUpperCase()
+    //           .includes(filter.text.toUpperCase()) ||
+    //         hotel.title.toUpperCase().includes(filter.text.toUpperCase());
+    //       return isStarEquals && isTextEqual;
+    //     });
+    //   }
+    // ).subscribe(
+    //   (filteredHotels: IHotel[]) => (this.filteredHotels = filteredHotels)
+    // );
     this.activeHotel = this.hotels.find((hotel: IHotel) => hotel.id === 0);
     this.isAdminVal = Boolean(sessionStorage.getItem('isAdmin'));
     this.store.dispatch(new LoadHotels({ page, limit }));

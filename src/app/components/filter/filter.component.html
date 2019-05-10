@@ -24,7 +24,6 @@
       <app-stars
         *ngFor="let starsCount of ['3', '4', '5']; trackBy:trackByFn"
         [starsCount]="starsCount"
-        [starsClass]="star.includes(starsCount)"
         (starsClicked)="addStarFilter($event)"
       ></app-stars>
     </div>

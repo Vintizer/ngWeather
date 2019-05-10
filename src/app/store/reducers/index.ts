@@ -9,15 +9,15 @@ import {
 import { environment } from '../../../environments/environment';
 import * as fromHotel from './hotel.reducer';
 
-export interface State {
+export interface IState {
   // hotels: IHotel[]
-  hotel: fromHotel.State;
+  hotel: fromHotel.IHotelState;
 }
 
-export const reducers: ActionReducerMap<State> = {
+export const reducers: ActionReducerMap<IState> = {
 
   hotel: fromHotel.reducer,
 };
 
 
-export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];
+export const metaReducers: MetaReducer<IState>[] = !environment.production ? [] : [];
