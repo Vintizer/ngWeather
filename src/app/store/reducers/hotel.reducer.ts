@@ -16,6 +16,7 @@ export interface IHotelState {
   data: IHotel[];
   error: string;
   filter: IFilterState;
+  activeHotelId: number;
 }
 const initialStarValue: string[] = ['3', '4', '5'];
 export const initialState: IHotelState = {
@@ -25,7 +26,8 @@ export const initialState: IHotelState = {
   filter: {
     text: '',
     star: initialStarValue
-  }
+  },
+  activeHotelId: -1
 };
 
 export function reducer(
@@ -49,6 +51,11 @@ export function reducer(
         ...state,
         isLoading: false,
         data: action.payload
+      };
+    case HotelActionTypes.SetActiveHotel:
+      return {
+        ...state,
+        activeHotelId: action.payload
       };
     case HotelActionTypes.SetTextFilter:
       return {
@@ -150,6 +157,18 @@ export const filteredHotelsSelector: MemoizedSelector<
         hotel.description.toUpperCase().includes(filter.text.toUpperCase()) ||
         hotel.title.toUpperCase().includes(filter.text.toUpperCase());
       return isStarEquals && isTextEqual;
+    });
+  }
+);
+export const activeHotelsSelector: MemoizedSelector<
+  IState,
+  IHotel
+> = createSelector(
+  (state: IState) => state.hotel.data,
+  (state: IState) => state.hotel.activeHotelId,
+  (hotels: IHotel[], activehotelId: number) => {
+    return hotels.find((hotel: IHotel) => {
+      return hotel.id === activehotelId;
     });
   }
 );

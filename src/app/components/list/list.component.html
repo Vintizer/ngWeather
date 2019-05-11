@@ -21,8 +21,8 @@
       (click)="setActiveHotel(hotel)"
       class="list-group-item list-group-item-action"
       [ngClass]="{
-        'activeHotel': activeHotel === hotel,
-        'list-group-item-secondary': odd && activeHotel !== hotel
+        'activeHotel': (activeHotel$ | async)?.id === hotel.id,
+        'list-group-item-secondary': odd && (activeHotel$ | async)?.id !== hotel.id
       }"
     >
       <div class="container">

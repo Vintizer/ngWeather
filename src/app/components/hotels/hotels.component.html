@@ -2,9 +2,7 @@
   <div class="row justify-content-around">
     <div class="col-5">
       <app-list 
-        (setActive)="setActiveHotel($event)"
         [hotels]="filteredHotels$ | async"
-        [activeHotel]="activeHotel"
         [isLoaded]="isFirstLoadDone"
       ></app-list>
     </div>
@@ -30,17 +28,17 @@
       </div>
       <div class="row justify-content-center mb-3">
         <app-active-hotel-photo
-          *ngIf="activeHotel"
-          [src]="activeHotel?.picture"
-          [description]="activeHotel?.description"
+          *ngIf="(activeHotel$ | async)"
+          [src]="(activeHotel$ | async)?.picture"
+          [description]="(activeHotel$ | async)?.description"
         ></app-active-hotel-photo>
       </div>
       <div class="row justify-content-around align-content-center">
         <div class="col-6">
-          <app-weather [weather]="activeHotel?.weather"></app-weather>
+          <app-weather [weather]="(activeHotel$ | async)?.weather"></app-weather>
         </div>
         <div class="col-6">
-          <app-profile [profile]="activeHotel?.profile"></app-profile>
+          <app-profile [profile]="(activeHotel$ | async)?.profile"></app-profile>
         </div>
       </div>
       <div class="row justify-content-center">

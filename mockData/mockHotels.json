@@ -3888,18 +3888,7 @@
       ]
     }
   ],
-  "favorites": [
-    {
-      "title": "Tazzy",
-      "id": 32,
-      "voted": 1
-    },
-    {
-      "title": "Devpulse",
-      "id": 31,
-      "voted": 1
-    }
-  ],
+  "favorites": [],
   "comments": [
     {
       "hotel_id": 140,

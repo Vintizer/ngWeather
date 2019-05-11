@@ -1,6 +1,7 @@
-import { LoadHotels } from './../../store/actions/hotel.actions';
+import { Observable } from 'rxjs';
+import { LoadHotels, SetActiveHotel } from './../../store/actions/hotel.actions';
 import { Store } from '@ngrx/store';
-import { IHotelState } from './../../store/reducers/hotel.reducer';
+import { activeHotelsSelector, IHotelState } from './../../store/reducers/hotel.reducer';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HotelsService } from 'src/app/hotels.service';
@@ -15,7 +16,7 @@ import { FavoriteService } from './../../services/favorite-service.service';
 })
 export class ListComponent implements OnInit {
   @Input() public hotels: IHotel[] = [];
-  @Input() public activeHotel: IHotel;
+  public activeHotel$: Observable<IHotel>;
   @Input() public isLoaded: boolean;
 
   @Output() public setActive: EventEmitter<IHotel> = new EventEmitter();
@@ -42,9 +43,10 @@ export class ListComponent implements OnInit {
       this.hotelsLength = hotelsArray.length;
     });
     this.isAdmin = Boolean(sessionStorage.getItem('isAdmin'));
+    this.activeHotel$ = this.store.select(activeHotelsSelector);
   }
   public setActiveHotel(hotel: IHotel): void {
-    this.setActive.emit(hotel);
+    this.store.dispatch(new SetActiveHotel(hotel.id));
   }
   public addHotelToFavorites(curHotel: IHotel, event: MouseEvent): void {
     event.stopPropagation();
