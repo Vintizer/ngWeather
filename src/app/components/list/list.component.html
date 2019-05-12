@@ -13,24 +13,19 @@
   <br />
   <div class="row">
     <a
-      *ngFor="
-        let hotel of hotels;
-        odd as odd;
-        trackBy: trackHotelsByFn
-      "
+      *ngFor="let hotel of hotels; odd as odd; trackBy: trackHotelsByFn"
       (click)="setActiveHotel(hotel)"
       class="list-group-item list-group-item-action"
       [ngClass]="{
-        'activeHotel': (activeHotel$ | async)?.id === hotel.id,
-        'list-group-item-secondary': odd && (activeHotel$ | async)?.id !== hotel.id
+        activeHotel: (activeHotel$ | async)?.id === hotel.id,
+        'list-group-item-secondary':
+          odd && (activeHotel$ | async)?.id !== hotel.id
       }"
     >
       <div class="container">
         <div class="d-flex w-100 justify-content-between">
           <h5 class="mb-1">
-            <a
-              [routerLink]="['/hotels', hotel.id]"
-            >
+            <a [routerLink]="['/hotels', hotel.id]">
               <app-text-highlight [text]="hotel.title"></app-text-highlight>
             </a>
           </h5>
@@ -68,9 +63,17 @@
           'btn-success': !isHotelInFavorite(hotel)
         }"
       >
-        {{
-          isHotelInFavorite(hotel) ? 'Vote for this hotel' : 'Add to favorites'
-        }}
+        'Add to favorites'
+      </button>
+      <button
+        (click)="voteHotelToFavorites(hotel, $event)"
+        class="btn"
+        [ngClass]="{
+          'btn-warning': isHotelInFavorite(hotel),
+          'btn-success': !isHotelInFavorite(hotel)
+        }"
+      >
+      'Vote for this hotel'
       </button>
     </a>
   </div>

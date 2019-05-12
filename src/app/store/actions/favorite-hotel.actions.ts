@@ -1,4 +1,4 @@
-import { IFavoriteView } from './../../models/hotel';
+import { IFavoriteView, IHotelView } from './../../models/hotel';
 import { Action } from '@ngrx/store';
 
 export enum FavoriteHotelActionTypes {
@@ -43,6 +43,7 @@ export class LoadFavoriteHotelsFailure implements Action {
 export class AddFavoriteHotels implements Action {
   public readonly type: FavoriteHotelActionTypes.AddFavoriteHotels =
     FavoriteHotelActionTypes.AddFavoriteHotels;
+  public constructor(public payload: IHotelView) {}
 }
 
 // tslint:disable-next-line: max-classes-per-file
@@ -62,6 +63,7 @@ export class AddFavoriteHotelsFailure implements Action {
 export class VoteFavoriteHotels implements Action {
   public readonly type: FavoriteHotelActionTypes.VoteFavoriteHotels =
     FavoriteHotelActionTypes.VoteFavoriteHotels;
+  public constructor(public payload: number) {}
 }
 
 // tslint:disable-next-line: max-classes-per-file
@@ -96,15 +98,16 @@ export class RemoveFavoriteHotelsFailure implements Action {
     FavoriteHotelActionTypes.RemoveFavoriteHotelsFailure;
   public constructor(public payload: string) {}
 }
-export type FavoriteHotelActions = LoadFavoriteHotels
-| LoadFavoriteHotelsSuccess
-| LoadFavoriteHotelsFailure
-| AddFavoriteHotels
-| AddFavoriteHotelsSuccess
-| AddFavoriteHotelsFailure
-| VoteFavoriteHotels
-| VoteFavoriteHotelsSuccess
-| VoteFavoriteHotelsFailure
-| RemoveFavoriteHotels
-| RemoveFavoriteHotelsSuccess
-| RemoveFavoriteHotelsFailure;
+export type FavoriteHotelActions =
+  | LoadFavoriteHotels
+  | LoadFavoriteHotelsSuccess
+  | LoadFavoriteHotelsFailure
+  | AddFavoriteHotels
+  | AddFavoriteHotelsSuccess
+  | AddFavoriteHotelsFailure
+  | VoteFavoriteHotels
+  | VoteFavoriteHotelsSuccess
+  | VoteFavoriteHotelsFailure
+  | RemoveFavoriteHotels
+  | RemoveFavoriteHotelsSuccess
+  | RemoveFavoriteHotelsFailure;

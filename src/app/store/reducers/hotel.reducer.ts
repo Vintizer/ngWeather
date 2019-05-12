@@ -50,7 +50,7 @@ export function reducer(
       return {
         ...state,
         isLoading: false,
-        data: action.payload
+        error: action.payload
       };
     case HotelActionTypes.SetActiveHotel:
       return {

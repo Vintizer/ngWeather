@@ -3888,7 +3888,23 @@
       ]
     }
   ],
-  "favorites": [],
+  "favorites": [
+    {
+      "title": "Devpulse",
+      "id": 31,
+      "voted": 1
+    },
+    {
+      "title": "Tazzy",
+      "id": 32,
+      "voted": 1
+    },
+    {
+      "title": "Edgeclub",
+      "id": 29,
+      "voted": 6
+    }
+  ],
   "comments": [
     {
       "hotel_id": 140,

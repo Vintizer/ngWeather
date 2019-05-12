@@ -12,10 +12,10 @@ import {
   OnInit,
   Output
 } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { fromEvent, Observable, Subscription } from 'rxjs';
 
 import { IFilter } from './../../models/hotel';
-import { FilterService } from './../../services/filter.service';
+import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs/operators';
 
 const initialStarValue: string[] = ['3', '4', '5'];
 
@@ -24,26 +24,21 @@ const initialStarValue: string[] = ['3', '4', '5'];
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.css']
 })
-export class FilterComponent implements OnInit, OnDestroy {
-  @Output() public filterChange: EventEmitter<IFilter> = new EventEmitter();
-  public star: string[] = initialStarValue;
-  private subscription: Subscription;
+export class FilterComponent implements OnInit {
 
   public constructor(
-    private filterService: FilterService,
     private store: Store<IState>
   ) {}
 
   public ngOnInit(): void {
-    // TODO
-    this.subscription = this.filterService.starsEvent.subscribe(
-      (stars: string[]) => (this.star = stars)
-    );
-  }
-  public changeFilter(event: KeyboardEvent): void {
-    this.store.dispatch(
-      new SetTextFilter((event.target as HTMLInputElement).value)
-    );
+    const inputElement: HTMLInputElement = document.querySelector('#filter') as HTMLInputElement;
+    fromEvent(inputElement, 'input').pipe(
+      map((event: Event) => (event.target as HTMLInputElement).value),
+      debounceTime(500),
+      distinctUntilChanged(),
+    ).subscribe((filter: string) => this.store.dispatch(
+      new SetTextFilter(filter)
+    ));
   }
   public addStarFilter(filterName: string): void {
     this.store.dispatch(
@@ -52,8 +47,5 @@ export class FilterComponent implements OnInit, OnDestroy {
   }
   public trackByFn(_i: number, star: string): string {
     return star;
-  }
-  public ngOnDestroy(): void {
-    this.subscription.unsubscribe();
   }
 }

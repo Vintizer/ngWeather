@@ -1,18 +1,19 @@
+import { IState } from './index';
 import {
   FavoriteHotelActions,
   FavoriteHotelActionTypes
 } from './../actions/favorite-hotel.actions';
 import { IFavoriteView } from './../../models/hotel';
-import { Action } from '@ngrx/store';
+import { Action, createSelector, MemoizedSelectorWithProps } from '@ngrx/store';
 
 export interface IFavState {
-  favorites: IFavoriteView[];
+  data: IFavoriteView[];
   isLoading: boolean;
   error: string;
 }
 
 export const initialState: IFavState = {
-  favorites: [],
+  data: [],
   isLoading: false,
   error: ''
 };
@@ -30,7 +31,7 @@ export function reducer(
     case FavoriteHotelActionTypes.LoadFavoriteHotelsSuccess:
       return {
         ...state,
-        favorites: action.payload,
+        data: action.payload,
         isLoading: false
       };
     case FavoriteHotelActionTypes.LoadFavoriteHotelsFailure:
@@ -47,7 +48,7 @@ export function reducer(
     case FavoriteHotelActionTypes.AddFavoriteHotelsSuccess:
       return {
         ...state,
-        favorites: [...state.favorites, action.payload],
+        data: [...state.data, action.payload],
         isLoading: false
       };
     case FavoriteHotelActionTypes.AddFavoriteHotelsFailure:
@@ -62,7 +63,7 @@ export function reducer(
         isLoading: true
       };
     case FavoriteHotelActionTypes.VoteFavoriteHotelsSuccess:
-      const updatedFavHotels: IFavoriteView[] = state.favorites.map(
+      const updatedFavHotels: IFavoriteView[] = state.data.map(
         (hotel: IFavoriteView) => {
           if (hotel.id === action.payload.id) {
             hotel.voted++;
@@ -72,7 +73,7 @@ export function reducer(
       );
       return {
         ...state,
-        favorites: [...state.favorites, action.payload],
+        data: updatedFavHotels,
         isLoading: false
       };
     case FavoriteHotelActionTypes.VoteFavoriteHotelsFailure:
@@ -89,7 +90,9 @@ export function reducer(
     case FavoriteHotelActionTypes.RemoveFavoriteHotelsSuccess:
       return {
         ...state,
-        favorites: state.favorites.filter((hotel: IFavoriteView) => hotel.id !== action.payload.id),
+        data: state.data.filter(
+          (hotel: IFavoriteView) => hotel.id !== action.payload.id
+        ),
         isLoading: false
       };
     case FavoriteHotelActionTypes.RemoveFavoriteHotelsFailure:
@@ -102,3 +105,15 @@ export function reducer(
       return state;
   }
 }
+export const favHotelSelector: MemoizedSelectorWithProps<
+  IState,
+  number,
+  boolean
+> = createSelector(
+  (state: IState) => state.favoriteHotel.data,
+  (favHotels: IFavoriteView[], hotelId: number) => {
+    return Boolean(
+      favHotels.find((hotel: IFavoriteView) => hotel.id === hotelId)
+    );
+  }
+);

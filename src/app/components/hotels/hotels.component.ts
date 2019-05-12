@@ -1,3 +1,5 @@
+import { IState } from './../../store/reducers/index';
+import { LoadFavoriteHotels } from './../../store/actions/favorite-hotel.actions';
 import { ActivatedRoute } from '@angular/router';
 import { HotelActions, LoadHotels, SetActiveHotel } from './../../store/actions/hotel.actions';
 import { Component, OnDestroy, OnInit } from '@angular/core';
@@ -31,7 +33,7 @@ export class HotelsComponent implements OnInit, OnDestroy {
 
   public constructor(
     private hotelsService: HotelsService,
-    private store: Store<IHotelState>,
+    private store: Store<IState>,
     private ar: ActivatedRoute
   ) {}
 
@@ -53,6 +55,7 @@ export class HotelsComponent implements OnInit, OnDestroy {
     this.filteredHotels$ = this.store.pipe(select(filteredHotelsSelector));
     this.isAdminVal = Boolean(sessionStorage.getItem('isAdmin'));
     this.store.dispatch(new LoadHotels({ page, limit }));
+    this.store.dispatch(new LoadFavoriteHotels());
   }
 
   public ngOnDestroy(): void {

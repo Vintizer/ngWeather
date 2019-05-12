@@ -1,3 +1,4 @@
+import { FavoriteHotelEffects } from './store/effects/favorite-hotel.effects';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -36,7 +37,7 @@ import { HotelEffects } from './store/effects/hotel.effects';
     ReactiveFormsModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([HotelEffects])
+    EffectsModule.forRoot([HotelEffects, FavoriteHotelEffects])
   ],
   providers: [
     {

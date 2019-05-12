@@ -1,3 +1,4 @@
+import { Store } from '@ngrx/store';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 import {
@@ -7,6 +8,8 @@ import {
 } from './../../models/hotel';
 import { FavoriteService } from './../../services/favorite-service.service';
 import { NotificationsService } from 'angular2-notifications';
+import { IState } from 'src/app/store/reducers';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-favorite-hotels',
@@ -14,14 +17,16 @@ import { NotificationsService } from 'angular2-notifications';
   styleUrls: ['./favorite-hotels.component.css']
 })
 export class FavoriteHotelsComponent implements OnInit {
-  public favoriteHotels: IFavoriteView[];
+  public favoriteHotels: Observable<IFavoriteView[]>;
   @Output() public favoriteRemoved: EventEmitter<true> = new EventEmitter();
 
   public constructor(
     private favService: FavoriteService,
-    private notificationsService: NotificationsService
+    private notificationsService: NotificationsService,
+    private store: Store<IState>
   ) {}
   public ngOnInit(): void {
+    this.favoriteHotels = this.store.select('favoriteHotel', 'data');
     this.favService.favorites$.subscribe((favsAction: IJsonResponse) => {
       switch (favsAction.type) {
         case ResponseType.add:
@@ -49,7 +54,7 @@ export class FavoriteHotelsComponent implements OnInit {
           });
           break;
       }
-      this.favoriteHotels = favsAction.data;
+      // this.favoriteHotels = favsAction.data;
     });
   }
   public removeHotelFromFavorites(id: number, e: MouseEvent): void {

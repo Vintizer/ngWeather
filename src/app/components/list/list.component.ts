@@ -1,3 +1,5 @@
+import { AddFavoriteHotels, VoteFavoriteHotels } from './../../store/actions/favorite-hotel.actions';
+import { IState } from './../../store/reducers/index';
 import { Observable } from 'rxjs';
 import { LoadHotels, SetActiveHotel } from './../../store/actions/hotel.actions';
 import { Store } from '@ngrx/store';
@@ -31,7 +33,7 @@ export class ListComponent implements OnInit {
     private hotelsService: HotelsService,
     private router: Router,
     private route: ActivatedRoute,
-    private store: Store<IHotelState>
+    private store: Store<IState>
   ) {}
 
   public ngOnInit(): void {
@@ -57,7 +59,19 @@ export class ListComponent implements OnInit {
       title,
       id
     };
-    this.favService.clickFavorite(favoriteView);
+    this.store.dispatch(new AddFavoriteHotels(favoriteView));
+    // this.favService.clickFavorite(favoriteView);
+  }
+  public voteHotelToFavorites(curHotel: IHotel, event: MouseEvent): void {
+    event.stopPropagation();
+    const { title, id } = this.hotels.find(
+      (hotel: IHotel) => hotel.id === curHotel.id
+    );
+    const favoriteView: IHotelView = {
+      title,
+      id
+    };
+    this.store.dispatch(new VoteFavoriteHotels(curHotel.id));
   }
   public trackHotelsByFn(_i: number, hotel: IHotel): number {
     return hotel.id;
@@ -66,7 +80,8 @@ export class ListComponent implements OnInit {
     return src;
   }
   public isHotelInFavorite(hotel: IHotel): boolean {
-    return this.favService.isHotelInFavorite(hotel.id);
+    return false;
+    // return this.favService.isHotelInFavorite(hotel.id);
   }
   public goToPage(e: any): void {
     const { pageIndex, pageSize } = e;

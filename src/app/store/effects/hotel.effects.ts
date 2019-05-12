@@ -12,15 +12,13 @@ import { HotelActions, HotelActionTypes, LoadHotelsError, LoadHotelsSuccess } fr
 export class HotelEffects {
 
   @Effect()
-  public loadUsers$: Observable<LoadHotelsSuccess | LoadHotelsError> = this.actions$.pipe(
+  public loadHotels$: Observable<LoadHotelsSuccess | LoadHotelsError> = this.actions$.pipe(
     ofType(HotelActionTypes.LoadHotels),
-    tap(console.log),
     mergeMap(({payload}) => this.hotelsService.getHotelsObservable(payload.page, payload.limit)
         .pipe(
           map((hotels: IHotel[]) => new LoadHotelsSuccess(hotels)),
-          catchError((err: any) => of(new LoadHotelsError(err)))
+          catchError((err: string) => of(new LoadHotelsError(err)))
         ))
-    /** An EMPTY observable only emits completion. Replace with your own observable API request */
   );
 
 
