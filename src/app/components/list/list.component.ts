@@ -10,6 +10,7 @@ import { HotelsService } from 'src/app/hotels.service';
 
 import { IHotel, IHotelView } from './../../models/hotel';
 import { FavoriteService } from './../../services/favorite-service.service';
+import { favHotelSelector } from 'src/app/store/reducers/favorite-hotel.reducer';
 
 @Component({
   selector: 'app-list',
@@ -79,9 +80,8 @@ export class ListComponent implements OnInit {
   public trackPicturesByFn(_i: number, src: string): string {
     return src;
   }
-  public isHotelInFavorite(hotel: IHotel): boolean {
-    return false;
-    // return this.favService.isHotelInFavorite(hotel.id);
+  public isHotelInFavorite(hotel: IHotel): Observable<boolean> {
+    return this.store.select(favHotelSelector, hotel.id);
   }
   public goToPage(e: any): void {
     const { pageIndex, pageSize } = e;

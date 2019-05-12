@@ -83,13 +83,14 @@ export class VoteFavoriteHotelsFailure implements Action {
 export class RemoveFavoriteHotels implements Action {
   public readonly type: FavoriteHotelActionTypes.RemoveFavoriteHotels =
     FavoriteHotelActionTypes.RemoveFavoriteHotels;
-}
+    public constructor(public payload: number) {}
+  }
 
 // tslint:disable-next-line: max-classes-per-file
 export class RemoveFavoriteHotelsSuccess implements Action {
   public readonly type: FavoriteHotelActionTypes.RemoveFavoriteHotelsSuccess =
     FavoriteHotelActionTypes.RemoveFavoriteHotelsSuccess;
-  public constructor(public payload: IFavoriteView) {}
+  public constructor(public payload: number) {}
 }
 
 // tslint:disable-next-line: max-classes-per-file

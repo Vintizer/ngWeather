@@ -1,3 +1,4 @@
+import { NotificationsService } from 'angular2-notifications';
 import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
@@ -19,6 +20,8 @@ import {
   FavoriteHotelActionTypes,
   LoadFavoriteHotelsFailure,
   LoadFavoriteHotelsSuccess,
+  RemoveFavoriteHotelsFailure,
+  RemoveFavoriteHotelsSuccess,
   VoteFavoriteHotelsFailure,
   VoteFavoriteHotelsSuccess
 } from './../actions/favorite-hotel.actions';
@@ -46,6 +49,7 @@ export class FavoriteHotelEffects {
     ofType(FavoriteHotelActionTypes.AddFavoriteHotels),
     mergeMap(({ payload: hotel }: { payload: IHotelView }) =>
       this.favService.addFavorite(hotel).pipe(
+        tap(() => this.addFavoriteNotification.bind(this)()),
         map(
           (favHotel: IFavoriteView) => new AddFavoriteHotelsSuccess(favHotel)
         ),
@@ -65,6 +69,7 @@ export class FavoriteHotelEffects {
         find((favHotel: IFavoriteView) => favHotel.id === hotelId),
         switchMap((hotel: IFavoriteView) =>
           this.favService.voteFavorite(hotel).pipe(
+        tap(() => this.voteFavoriteNotification.bind(this)()),
             map(
               (favHotel: IFavoriteView) =>
                 new VoteFavoriteHotelsSuccess(favHotel)
@@ -76,9 +81,48 @@ export class FavoriteHotelEffects {
     )
   );
 
+  @Effect()
+  public removeFromFavorites$: Observable<
+    RemoveFavoriteHotelsSuccess | RemoveFavoriteHotelsFailure
+  > = this.actions$.pipe(
+    ofType(FavoriteHotelActionTypes.RemoveFavoriteHotels),
+    mergeMap(({ payload: hotelId }: { payload: number }) =>
+      this.favService.removeFromFavorites(hotelId).pipe(
+        tap(() => this.removeFavoriteNotification.bind(this)()),
+        map(() => new RemoveFavoriteHotelsSuccess(hotelId)),
+        catchError((err: string) => of(new RemoveFavoriteHotelsFailure(err)))
+      )
+    )
+  );
+
   public constructor(
     private actions$: Actions,
     private favService: FavoriteService,
-    private store: Store<IState>
+    private store: Store<IState>,
+    private ns: NotificationsService
   ) {}
+  public addFavoriteNotification(): void {
+    this.ns.success('Favorite added!', '', {
+      timeOut: 1000,
+      clickToClose: true,
+      animate: 'fade',
+      showProgressBar: false
+    });
+  }
+  public removeFavoriteNotification(): void {
+    this.ns.warn('Favorite removed!', '', {
+      timeOut: 1000,
+      clickToClose: true,
+      animate: 'fade',
+      showProgressBar: false
+    });
+  }
+  public voteFavoriteNotification(): void {
+    this.ns.info('Your vote has been counted!', '', {
+      timeOut: 1000,
+      clickToClose: true,
+      animate: 'fade',
+      showProgressBar: false
+    });
+  }
 }

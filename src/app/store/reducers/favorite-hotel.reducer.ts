@@ -91,7 +91,7 @@ export function reducer(
       return {
         ...state,
         data: state.data.filter(
-          (hotel: IFavoriteView) => hotel.id !== action.payload.id
+          (hotel: IFavoriteView) => hotel.id !== action.payload
         ),
         isLoading: false
       };

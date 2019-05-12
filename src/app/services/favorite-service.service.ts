@@ -55,7 +55,7 @@ export class FavoriteService {
   public getFavorites(): Observable<IFavoriteView[]> {
     return this.http.get<IFavoriteView[]>(`${this.configUrl}favorites`);
   }
-  public removeFromFavorites(id: number): Observable<any> {
+  public removeFromFavorites(id: number): Observable<{}> {
     return this.http.delete(`${this.configUrl}favorites/${id}`);
   }
   public removeFromFavoritesOld(id: number): void {

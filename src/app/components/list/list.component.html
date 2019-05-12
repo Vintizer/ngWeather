@@ -56,24 +56,18 @@
         Remove hotel
       </button>
       <button
+        *ngIf="!(isHotelInFavorite(hotel) | async)"
         (click)="addHotelToFavorites(hotel, $event)"
-        class="btn"
-        [ngClass]="{
-          'btn-warning': isHotelInFavorite(hotel),
-          'btn-success': !isHotelInFavorite(hotel)
-        }"
+        class="btn btn-success"
       >
-        'Add to favorites'
+        Add to favorites
       </button>
       <button
+        *ngIf="isHotelInFavorite(hotel) | async"
         (click)="voteHotelToFavorites(hotel, $event)"
-        class="btn"
-        [ngClass]="{
-          'btn-warning': isHotelInFavorite(hotel),
-          'btn-success': !isHotelInFavorite(hotel)
-        }"
+        class="btn btn-warning"
       >
-      'Vote for this hotel'
+        Vote for this hotel
       </button>
     </a>
   </div>

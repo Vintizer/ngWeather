@@ -1,3 +1,4 @@
+import { RemoveFavoriteHotels } from './../../store/actions/favorite-hotel.actions';
 import { Store } from '@ngrx/store';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
@@ -59,7 +60,7 @@ export class FavoriteHotelsComponent implements OnInit {
   }
   public removeHotelFromFavorites(id: number, e: MouseEvent): void {
     e.preventDefault();
-    this.favService.removeFromFavorites(id);
+    this.store.dispatch(new RemoveFavoriteHotels(id));
   }
   public trackByFn(_index: number, hotel: IFavoriteView): number {
     return hotel.id;
