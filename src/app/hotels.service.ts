@@ -9,39 +9,28 @@ import { IHotel, IHotelComment } from './models/hotel';
   providedIn: 'root'
 })
 export class HotelsService {
-  public hotels$: Subject<IHotel[]> = new Subject();
-  public allHotels$: Subject<IHotel[]> = new Subject();
   private configUrl: string = environment.configUrl;
   public constructor(private http: HttpClient) {}
-  public getHotels(page: number = 0, limit: number = 20): void {
-    this.http
-      .get(`${this.configUrl}hotels?_page=${page + 1}&_limit=${limit}`)
-      .subscribe((hotels: IHotel[]) => this.hotels$.next(hotels));
-  }
-  public getHotelsObservable(page: number = 0, limit: number = 20): Observable<IHotel[]> {
-    console.log('limit: ', limit);
-    console.log('page: ', page);
-    return this.http.get<IHotel[]>(`${this.configUrl}hotels?_page=${page + 1}&_limit=${limit}`);
+  public getHotelsObservable(
+    page: number = 0,
+    limit: number = 20
+  ): Observable<IHotel[]> {
+    return this.http.get<IHotel[]>(
+      `${this.configUrl}hotels?_page=${page + 1}&_limit=${limit}`
+    );
   }
   public getHotelById(id: string): Observable<IHotel> {
-    return this.http
-      .get(`${this.configUrl}hotels/${id}`) as Observable<IHotel>;
+    return this.http.get(`${this.configUrl}hotels/${id}`) as Observable<IHotel>;
   }
   public getCommentsById(id: string): Observable<IHotelComment[]> {
-    return this.http
-      .get(`${this.configUrl}comments?hotel_id=${id}`) as Observable<IHotelComment[]>;
+    return this.http.get(
+      `${this.configUrl}comments?hotel_id=${id}`
+    ) as Observable<IHotelComment[]>;
   }
-  public getAllHotels(): void {
-    this.http
-      .get(`${this.configUrl}hotels`)
-      .subscribe((hotels: IHotel[]) => this.allHotels$.next(hotels));
+  public getAllHotels(): Observable<IHotel[]> {
+    return this.http.get<IHotel[]>(`${this.configUrl}hotels`);
   }
-  public removeHotel(id: number): void {
-    this.http
-      .delete(`${this.configUrl}hotels/${id}`)
-      .subscribe(() => {
-        this.getHotels();
-        this.getAllHotels();
-      });
+  public removeHotel(id: number): Observable<{}> {
+    return this.http.delete(`${this.configUrl}hotels/${id}`);
   }
 }

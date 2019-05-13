@@ -1,6 +1,6 @@
 import { IState } from './index';
 import { IHiglight, IHotel } from './../../models/hotel';
-import { HotelActions, HotelActionTypes } from './../actions/hotel.actions';
+import { HotelActions, HotelActionTypes, RemoveHotels } from './../actions/hotel.actions';
 import {
   createSelector,
   MemoizedSelector,
@@ -14,6 +14,7 @@ interface IFilterState {
 export interface IHotelState {
   isLoading: boolean;
   data: IHotel[];
+  hotelsCount: number;
   error: string;
   filter: IFilterState;
   activeHotelId: number;
@@ -22,6 +23,7 @@ const initialStarValue: string[] = ['3', '4', '5'];
 export const initialState: IHotelState = {
   isLoading: false,
   data: [],
+  hotelsCount: 0,
   error: '',
   filter: {
     text: '',
@@ -47,6 +49,33 @@ export function reducer(
         data: action.payload
       };
     case HotelActionTypes.LoadHotelsError:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
+      };
+    case HotelActionTypes.LoadAllHotels:
+      return state;
+    case HotelActionTypes.LoadAllHotelsSuccess:
+      return {
+        ...state,
+        hotelsCount: action.payload.length
+      };
+    case HotelActionTypes.LoadAllHotelsError:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
+      };
+    case HotelActionTypes.RemoveHotels:
+      return state;
+    case HotelActionTypes.RemoveHotelsSuccess:
+      return {
+        ...state,
+        isLoading: false,
+        data: state.data.filter((hotel: IHotel) => hotel.id !== action.payload)
+      };
+    case HotelActionTypes.RemoveHotelsError:
       return {
         ...state,
         isLoading: false,

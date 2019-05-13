@@ -1,7 +1,6 @@
 import { SetStarFilter } from './../../store/actions/hotel.actions';
 import { IState } from './../../store/reducers/index';
 import { select, Store } from '@ngrx/store';
-import { FilterService } from './../../services/filter.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { starSelector } from 'src/app/store/reducers/hotel.reducer';
@@ -13,13 +12,11 @@ import { starSelector } from 'src/app/store/reducers/hotel.reducer';
 })
 export class StarsComponent implements OnInit {
   @Input() public starsCount: string;
-  @Output() public starsClicked: EventEmitter<string> = new EventEmitter();
   public starsClass: Observable<boolean>;
 
   public starArray: number[];
 
   public constructor(
-    private filterService: FilterService,
     private store: Store<IState>
   ) {}
 

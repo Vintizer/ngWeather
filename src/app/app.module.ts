@@ -12,7 +12,6 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AboutComponent } from './components/about/about.component';
-import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ParamInterceptor } from './services/api.interceptor';
@@ -23,7 +22,6 @@ import { HotelEffects } from './store/effects/hotel.effects';
 @NgModule({
   declarations: [
     AppComponent,
-    ContactUsComponent,
     AboutComponent,
     NotFoundComponent,
     NavbarComponent

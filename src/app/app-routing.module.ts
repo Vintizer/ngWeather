@@ -29,7 +29,7 @@ const routes: Routes = [
   },
   {
     path: 'contact',
-    component: ContactUsComponent
+    loadChildren: './modules/contact/contact.module#ContactModule'
   },
   {
     path: '**',

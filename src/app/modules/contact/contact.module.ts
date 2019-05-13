@@ -13,7 +13,7 @@ const routes: Routes = [
   }
 ];
 @NgModule({
-  declarations: [],
-  imports: [CommonModule, ReactiveFormsModule ]
+  declarations: [ContactUsComponent],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule.forChild(routes) ]
 })
 export class ContactModule {}

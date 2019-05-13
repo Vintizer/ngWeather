@@ -1,10 +1,10 @@
 import { IState } from './../../store/reducers/index';
 import { LoadFavoriteHotels } from './../../store/actions/favorite-hotel.actions';
 import { ActivatedRoute } from '@angular/router';
-import { HotelActions, LoadHotels, SetActiveHotel } from './../../store/actions/hotel.actions';
+import { HotelActions, LoadAllHotels, LoadHotels, SetActiveHotel } from './../../store/actions/hotel.actions';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { HotelsService } from '../../hotels.service';
 import { IHotel } from '../../models/hotel';
@@ -21,7 +21,7 @@ import { take, tap } from 'rxjs/operators';
   templateUrl: './hotels.component.html',
   styleUrls: ['./hotels.component.css']
 })
-export class HotelsComponent implements OnInit, OnDestroy {
+export class HotelsComponent implements OnInit {
   public hotels: IHotel[] = [];
   public activeHotel$: Observable<IHotel>;
   public isFirstLoadDone: boolean = false;
@@ -29,10 +29,8 @@ export class HotelsComponent implements OnInit, OnDestroy {
   public hotels$: Observable<IHotel[]>;
   public filteredHotels$: Observable<IHotel[]>;
   public filter$: Observable<any>;
-  private subscription: Subscription;
 
   public constructor(
-    private hotelsService: HotelsService,
     private store: Store<IState>,
     private ar: ActivatedRoute
   ) {}
@@ -56,11 +54,9 @@ export class HotelsComponent implements OnInit, OnDestroy {
     this.isAdminVal = Boolean(sessionStorage.getItem('isAdmin'));
     this.store.dispatch(new LoadHotels({ page, limit }));
     this.store.dispatch(new LoadFavoriteHotels());
+    this.store.dispatch(new LoadAllHotels());
   }
 
-  public ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
   public iAdmin(): void {
     if (this.isAdminVal) {
       sessionStorage.removeItem('isAdmin');

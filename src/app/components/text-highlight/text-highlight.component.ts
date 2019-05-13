@@ -1,6 +1,5 @@
 import { select, Store } from '@ngrx/store';
 import { IState } from './../../store/reducers/index';
-import { FilterService } from './../../services/filter.service';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 
 import { IHiglight } from './../../models/hotel';
@@ -18,7 +17,6 @@ export class TextHighlightComponent implements OnInit {
   private subscription: Subscription;
 
   public constructor(
-    private filterService: FilterService,
     private store: Store<IState>) {}
 
   public ngOnInit(): void {

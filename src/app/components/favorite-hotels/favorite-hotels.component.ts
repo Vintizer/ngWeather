@@ -19,44 +19,13 @@ import { Observable } from 'rxjs';
 })
 export class FavoriteHotelsComponent implements OnInit {
   public favoriteHotels: Observable<IFavoriteView[]>;
-  @Output() public favoriteRemoved: EventEmitter<true> = new EventEmitter();
 
   public constructor(
-    private favService: FavoriteService,
     private notificationsService: NotificationsService,
     private store: Store<IState>
   ) {}
   public ngOnInit(): void {
     this.favoriteHotels = this.store.select('favoriteHotel', 'data');
-    this.favService.favorites$.subscribe((favsAction: IJsonResponse) => {
-      switch (favsAction.type) {
-        case ResponseType.add:
-          this.notificationsService.success('Favorite added!', '', {
-            timeOut: 1000,
-            clickToClose: true,
-            animate: 'fade',
-            showProgressBar: false
-          });
-          break;
-        case ResponseType.remove:
-          this.notificationsService.warn('Favorite removed!', '', {
-            timeOut: 1000,
-            clickToClose: true,
-            animate: 'fade',
-            showProgressBar: false
-          });
-          break;
-        case ResponseType.vote:
-          this.notificationsService.info('Your vote has been counted!', '', {
-            timeOut: 1000,
-            clickToClose: true,
-            animate: 'fade',
-            showProgressBar: false
-          });
-          break;
-      }
-      // this.favoriteHotels = favsAction.data;
-    });
   }
   public removeHotelFromFavorites(id: number, e: MouseEvent): void {
     e.preventDefault();

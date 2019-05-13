@@ -1,9 +1,9 @@
 <div class="list-group" *loadElse="hotels?.length || isLoaded">
   <div class="row align-items-center">
     <mat-paginator
-      *ngIf="hotelsLength"
+      *ngIf="hotelsLength$ | async"
       #paginator
-      [length]="hotelsLength"
+      [length]="hotelsLength$ | async"
       [pageIndex]="pageIndex"
       [pageSize]="pageSize"
       (page)="goToPage($event)"
@@ -71,7 +71,7 @@
       </button>
     </a>
   </div>
-  <div class="list-group" *ngIf="!(hotels | filter).length">
+  <div class="list-group" *ngIf="!hotels.length">
     No valid hotels for your filters
   </div>
 </div>
