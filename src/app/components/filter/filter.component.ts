@@ -1,8 +1,21 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
-import { Subscription } from 'rxjs';
+import {
+  HotelActions,
+  SetStarFilter,
+  SetTextFilter
+} from './../../store/actions/hotel.actions';
+import { Store } from '@ngrx/store';
+import { IState } from './../../store/reducers/index';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output
+} from '@angular/core';
+import { fromEvent, Observable, Subscription } from 'rxjs';
 
 import { IFilter } from './../../models/hotel';
-import { FilterService } from './../../services/filter.service';
+import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs/operators';
 
 const initialStarValue: string[] = ['3', '4', '5'];
 
@@ -11,28 +24,28 @@ const initialStarValue: string[] = ['3', '4', '5'];
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.css']
 })
-export class FilterComponent implements OnInit, OnDestroy {
-  @Output() public filterChange: EventEmitter<IFilter> = new EventEmitter();
-  public star: string[] = initialStarValue;
-  private subscription: Subscription;
+export class FilterComponent implements OnInit {
 
-  public constructor(private filterService: FilterService) {}
+  public constructor(
+    private store: Store<IState>
+  ) {}
 
   public ngOnInit(): void {
-    this.subscription = this.filterService.starsEvent.subscribe(
-      (stars: string[]) => (this.star = stars)
-    );
-  }
-  public changeFilter(event: KeyboardEvent): void {
-    this.filterService.setTextFilter((event.target as HTMLInputElement).value);
+    const inputElement: HTMLInputElement = document.querySelector('#filter') as HTMLInputElement;
+    fromEvent(inputElement, 'input').pipe(
+      map((event: Event) => (event.target as HTMLInputElement).value),
+      debounceTime(500),
+      distinctUntilChanged(),
+    ).subscribe((filter: string) => this.store.dispatch(
+      new SetTextFilter(filter)
+    ));
   }
   public addStarFilter(filterName: string): void {
-    this.filterService.setStarFilter(filterName);
+    this.store.dispatch(
+      new SetStarFilter(filterName)
+    );
   }
   public trackByFn(_i: number, star: string): string {
     return star;
-  }
-  public ngOnDestroy(): void {
-    this.subscription.unsubscribe();
   }
 }

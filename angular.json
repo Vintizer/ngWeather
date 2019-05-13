@@ -131,5 +131,8 @@
       }
     }
   },
-  "defaultProject": "hotels"
+  "defaultProject": "hotels",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }

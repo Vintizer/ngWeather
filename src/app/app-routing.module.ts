@@ -1,3 +1,4 @@
+import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { ContactDeactivateGuard } from './guards/contact-deactivate.guard';
 import { UsersGuard } from './guards/users.guard';
 import { HotelCommentsComponent } from './components/hotel-comments/hotel-comments.component';
@@ -37,7 +38,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { enableTracing: true })],
+  imports: [RouterModule.forRoot(routes, { enableTracing: false })],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

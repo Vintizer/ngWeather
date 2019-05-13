@@ -1,6 +1,6 @@
 <div class="row justify-content-center">
   Favorites hotels
-  <div class="col-12 list-group-item d-flex justify-content-between" *ngFor="let hotel of favoriteHotels; trackBy: trackByFn">
+  <div class="col-12 list-group-item d-flex justify-content-between" *ngFor="let hotel of (favoriteHotels | async); trackBy: trackByFn">
     {{ hotel.title }}
     <p>
       <span class="badge badge-primary badge-pill mr-1">Voted {{ hotel.voted }}</span>

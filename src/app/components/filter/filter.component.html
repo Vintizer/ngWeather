@@ -4,11 +4,11 @@
     <div class="input-group mb-3 mt-3">
       <input
         type="text"
+        id="filter"
         class="form-control"
         placeholder="Filter hotels"
         aria-label="Filter hotels"
         aria-describedby="basic-addon1"
-        (input)="changeFilter($event)"
       />
     </div>
   </div>
@@ -24,7 +24,6 @@
       <app-stars
         *ngFor="let starsCount of ['3', '4', '5']; trackBy:trackByFn"
         [starsCount]="starsCount"
-        [starsClass]="star.includes(starsCount)"
         (starsClicked)="addStarFilter($event)"
       ></app-stars>
     </div>

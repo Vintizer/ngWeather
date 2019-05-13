@@ -16,9 +16,7 @@ import { StarsComponent } from '../components/stars/stars.component';
 import { TextHighlightComponent } from '../components/text-highlight/text-highlight.component';
 import { WeatherComponent } from '../components/weather/weather.component';
 import { LoadingDirective } from '../directives/loading.directive';
-import { FilterPipe } from '../pipes/filter.pipe';
 import { FavoriteService } from '../services/favorite-service.service';
-import { FilterService } from '../services/filter.service';
 import { ActiveHotelPhotoComponent } from '../components/active-hotel-photo/active-hotel-photo.component';
 import { HotelDetailsComponent } from '../components/hotel-details/hotel-details.component';
 import { HotelCommentsComponent } from '../components/hotel-comments/hotel-comments.component';
@@ -53,7 +51,6 @@ const routes: Routes = [
     LoadingComponent,
     LoadingDirective,
     TextHighlightComponent,
-    FilterPipe,
     ActiveHotelPhotoComponent,
     HotelDetailsComponent,
     HotelCommentsComponent,
@@ -64,10 +61,9 @@ const routes: Routes = [
     MatCardModule,
     FontAwesomeModule,
     MatPaginatorModule,
-    // ContactModule,
     RouterModule.forChild(routes)
   ],
   entryComponents: [LoadingComponent],
-  providers: [FavoriteService, FilterService, FilterPipe]
+  providers: [FavoriteService]
 })
 export class HotelsModule {}

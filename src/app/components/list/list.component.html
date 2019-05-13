@@ -1,36 +1,31 @@
-<div class="list-group" *loadElse="hotels.length || isLoaded">
+<div class="list-group" *loadElse="hotels?.length || isLoaded">
   <div class="row align-items-center">
     <mat-paginator
-      *ngIf="hotelsLength"
+      *ngIf="hotelsLength$ | async"
       #paginator
-      [length]="hotelsLength"
+      [length]="hotelsLength$ | async"
       [pageIndex]="pageIndex"
       [pageSize]="pageSize"
-      (page)="getServerData($event)"
+      (page)="goToPage($event)"
     >
     </mat-paginator>
   </div>
   <br />
   <div class="row">
     <a
-      *ngFor="
-        let hotel of (hotels | filter);
-        odd as odd;
-        trackBy: trackHotelsByFn
-      "
+      *ngFor="let hotel of hotels; odd as odd; trackBy: trackHotelsByFn"
       (click)="setActiveHotel(hotel)"
       class="list-group-item list-group-item-action"
       [ngClass]="{
-        'activeHotel': activeHotel === hotel,
-        'list-group-item-secondary': odd && activeHotel !== hotel
+        activeHotel: (activeHotel$ | async)?.id === hotel.id,
+        'list-group-item-secondary':
+          odd && (activeHotel$ | async)?.id !== hotel.id
       }"
     >
       <div class="container">
         <div class="d-flex w-100 justify-content-between">
           <h5 class="mb-1">
-            <a
-              [routerLink]="['/hotels', hotel.id]"
-            >
+            <a [routerLink]="['/hotels', hotel.id]">
               <app-text-highlight [text]="hotel.title"></app-text-highlight>
             </a>
           </h5>
@@ -61,20 +56,22 @@
         Remove hotel
       </button>
       <button
+        *ngIf="!(isHotelInFavorite(hotel) | async)"
         (click)="addHotelToFavorites(hotel, $event)"
-        class="btn"
-        [ngClass]="{
-          'btn-warning': isHotelInFavorite(hotel),
-          'btn-success': !isHotelInFavorite(hotel)
-        }"
+        class="btn btn-success"
       >
-        {{
-          isHotelInFavorite(hotel) ? 'Vote for this hotel' : 'Add to favorites'
-        }}
+        Add to favorites
+      </button>
+      <button
+        *ngIf="isHotelInFavorite(hotel) | async"
+        (click)="voteHotelToFavorites(hotel, $event)"
+        class="btn btn-warning"
+      >
+        Vote for this hotel
       </button>
     </a>
   </div>
-  <div class="list-group" *ngIf="!(hotels | filter).length">
+  <div class="list-group" *ngIf="!hotels.length">
     No valid hotels for your filters
   </div>
 </div>
