@@ -1,10 +1,12 @@
+import { IState } from 'src/app/store/reducers';
+import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
-  Router,
   RouterStateSnapshot
 } from '@angular/router';
+import * as RouterActions from '../store/actions/router.actions';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -12,7 +14,7 @@ import { Observable } from 'rxjs';
 })
 export class UsersGuard implements CanActivate {
   public isAdminVal: boolean = Boolean(sessionStorage.getItem('isAdmin'));
-  public constructor(private router: Router) {}
+  public constructor(private store: Store<IState>) {}
   public canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -20,7 +22,12 @@ export class UsersGuard implements CanActivate {
     if (this.isAdminVal) {
       return true;
     } else {
-      this.router.navigate(['']);
+      this.store.dispatch(
+        new RouterActions.Go({
+          path: [''],
+          extras: { replaceUrl: false }
+        })
+      );
       return false;
     }
   }

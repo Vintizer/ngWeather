@@ -12,8 +12,10 @@ import {
   HotelActionTypes,
   LoadAllHotelsError,
   LoadAllHotelsSuccess,
+  LoadHotelError,
   LoadHotelsError,
   LoadHotelsSuccess,
+  LoadHotelSuccess,
   RemoveHotelsError,
   RemoveHotelsSuccess
 } from './../actions/hotel.actions';
@@ -35,13 +37,25 @@ export class HotelEffects {
   );
 
   @Effect()
+  public loadHotel$: Observable<
+    LoadHotelSuccess | LoadHotelError
+  > = this.actions$.pipe(
+    ofType(HotelActionTypes.LoadHotel),
+    mergeMap(({ payload }) =>
+      this.hotelsService.getHotelById(payload).pipe(
+        map((hotel: IHotel) => new LoadHotelSuccess(hotel)),
+        catchError((err: string) => of(new LoadHotelError(err)))
+      )
+    )
+  );
+
+  @Effect()
   public loadAllHotels$: Observable<
     LoadAllHotelsSuccess | LoadAllHotelsError
   > = this.actions$.pipe(
     ofType(HotelActionTypes.LoadAllHotels),
     mergeMap(() =>
       this.hotelsService.getAllHotels().pipe(
-        tap(console.log),
         map((hotels: IHotel[]) => new LoadAllHotelsSuccess(hotels)),
         catchError((err: string) => of(new LoadAllHotelsError(err)))
       )

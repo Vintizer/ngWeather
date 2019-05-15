@@ -1,16 +1,21 @@
-import { AddFavoriteHotels, VoteFavoriteHotels } from './../../store/actions/favorite-hotel.actions';
-import { IState } from './../../store/reducers/index';
-import { Observable } from 'rxjs';
-import { LoadHotels, RemoveHotels, SetActiveHotel } from './../../store/actions/hotel.actions';
-import { Store } from '@ngrx/store';
-import { activeHotelsSelector, IHotelState } from './../../store/reducers/hotel.reducer';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { HotelsService } from 'src/app/hotels.service';
-
-import { IHotel, IHotelView } from './../../models/hotel';
-import { FavoriteService } from './../../services/favorite-service.service';
+import { Store } from '@ngrx/store';
+import { Observable, of } from 'rxjs';
 import { favHotelSelector } from 'src/app/store/reducers/favorite-hotel.reducer';
+
+import * as RouterActions from '../../store/actions/router.actions';
+import { IHotel, IHotelView } from './../../models/hotel';
+import {
+  AddFavoriteHotels,
+  VoteFavoriteHotels
+} from './../../store/actions/favorite-hotel.actions';
+import {
+  LoadHotels,
+  RemoveHotels,
+  SetActiveHotel
+} from './../../store/actions/hotel.actions';
+import { IState } from './../../store/reducers';
+import { activeHotelsSelector } from './../../store/reducers/hotel.reducer';
 
 @Component({
   selector: 'app-list',
@@ -26,18 +31,21 @@ export class ListComponent implements OnInit {
   @Output() public favoriteAdded: EventEmitter<true> = new EventEmitter();
   public hotelsLength$: Observable<number>;
   public isAdmin: boolean;
-  public pageIndex: number = 0;
-  public pageSize: number = 20;
+  public pageIndex$: Observable<number>;
+  public pageSize$: Observable<number>;
 
-  public constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private store: Store<IState>
-  ) {}
+  public constructor(private store: Store<IState>) {}
 
   public ngOnInit(): void {
-    this.pageIndex = +this.route.snapshot.paramMap.get('pageIndex');
-    this.pageSize = +this.route.snapshot.paramMap.get('pageSize');
+    this.pageIndex$ = of(0);
+    this.pageSize$ = of(20);
+    this.pageIndex$ = this.store.select(
+      'router',
+      'state',
+      'params',
+      'pageIndex'
+    );
+    this.pageSize$ = this.store.select('router', 'state', 'params', 'pageSize');
     this.isAdmin = Boolean(sessionStorage.getItem('isAdmin'));
     this.activeHotel$ = this.store.select(activeHotelsSelector);
     this.hotelsLength$ = this.store.select('hotel', 'hotelsCount');
@@ -78,9 +86,12 @@ export class ListComponent implements OnInit {
   }
   public goToPage(e: any): void {
     const { pageIndex, pageSize } = e;
-    console.log('pageSize: ', pageSize);
-    console.log('pageIndex: ', pageIndex);
-    this.router.navigate(['/hotels', { pageIndex, pageSize }]);
+    this.store.dispatch(
+      new RouterActions.Go({
+        path: ['/hotels', { pageIndex, pageSize }],
+        extras: { replaceUrl: false }
+      })
+    );
     this.store.dispatch(new LoadHotels({ page: pageIndex, limit: pageSize }));
   }
   public removeHotel(id: number, event: MouseEvent): void {

@@ -1,3 +1,4 @@
+import { IRouterStateUrl } from './custom-route-serializer';
 import { IHotel } from './../../models/hotel';
 import {
   ActionReducer,
@@ -9,9 +10,10 @@ import {
 import { environment } from '../../../environments/environment';
 import * as fromHotel from './hotel.reducer';
 import * as fromFavoriteHotel from './favorite-hotel.reducer';
+import { routerReducer, RouterReducerState } from '@ngrx/router-store';
 
 export interface IState {
-  // hotels: IHotel[]
+  router: RouterReducerState<IRouterStateUrl>;
   hotel: fromHotel.IHotelState;
   favoriteHotel: fromFavoriteHotel.IFavState;
 }
@@ -19,6 +21,7 @@ export interface IState {
 export const reducers: ActionReducerMap<IState> = {
 
   hotel: fromHotel.reducer,
+  router: routerReducer,
   favoriteHotel: fromFavoriteHotel.reducer,
 };
 

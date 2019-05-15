@@ -1,7 +1,9 @@
+import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { IState } from 'src/app/store/reducers';
+import * as RouterActions from '../../store/actions/router.actions';
 
 @Component({
   selector: 'app-contact-us',
@@ -12,8 +14,7 @@ export class ContactUsComponent implements OnInit {
   public commentForm: FormGroup;
   public constructor(
     private formBuilder: FormBuilder,
-    private router: Router,
-    private ar: ActivatedRoute
+    private store: Store<IState>
   ) {}
 
   public ngOnInit(): void {
@@ -29,6 +30,8 @@ export class ContactUsComponent implements OnInit {
     return this.commentForm.dirty;
   }
   public cancel(): void {
-    this.router.navigate(['/hotels']);
+    this.store.dispatch(new RouterActions.Go({
+      path: ['/hotels'],
+    }));
   }
 }

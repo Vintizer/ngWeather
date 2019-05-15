@@ -1,10 +1,14 @@
 import { IState } from './../../store/reducers/index';
 import { LoadFavoriteHotels } from './../../store/actions/favorite-hotel.actions';
-import { ActivatedRoute } from '@angular/router';
-import { HotelActions, LoadAllHotels, LoadHotels, SetActiveHotel } from './../../store/actions/hotel.actions';
+import {
+  HotelActions,
+  LoadAllHotels,
+  LoadHotels,
+  SetActiveHotel
+} from './../../store/actions/hotel.actions';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 import { HotelsService } from '../../hotels.service';
 import { IHotel } from '../../models/hotel';
@@ -14,7 +18,7 @@ import {
   IHotelState
 } from './../../store/reducers/hotel.reducer';
 import { combineLatest } from 'rxjs';
-import { take, tap } from 'rxjs/operators';
+import { map, switchMap, take, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-hotels',
@@ -31,15 +35,31 @@ export class HotelsComponent implements OnInit {
   public filter$: Observable<any>;
 
   public constructor(
-    private store: Store<IState>,
-    private ar: ActivatedRoute
+    private store: Store<IState>
   ) {}
 
   public ngOnInit(): void {
-    const pageParams: { pageIndex?: string; pageSize?: string } = (this.ar
-      .params as BehaviorSubject<any>).value;
-    const page: number = Number(pageParams.pageIndex || '0');
-    const limit: number = Number(pageParams.pageSize || '20');
+    this.store
+      .select('router', 'state', 'params')
+      .pipe(
+        map(
+          ({
+            pageIndex,
+            pageSize
+          }: {
+            pageIndex?: string;
+            pageSize?: string;
+          }) => {
+            const page: number = Number(pageIndex || '0');
+            const limit: number = Number(pageSize || '20');
+            return { page, limit };
+          }
+        )
+      )
+      .subscribe(({ page, limit }) => {
+        this.store.dispatch(new LoadHotels({ page, limit }));
+      });
+
     this.store
       .select('hotel', 'data')
       .pipe(take(2))
@@ -47,12 +67,12 @@ export class HotelsComponent implements OnInit {
         (hotels: IHotel[]) =>
           (this.isFirstLoadDone = hotels.length ? true : false)
       );
+
     this.hotels$ = this.store.select('hotel', 'data');
     this.filter$ = this.store.select('hotel', 'filter');
     this.activeHotel$ = this.store.select(activeHotelsSelector);
     this.filteredHotels$ = this.store.pipe(select(filteredHotelsSelector));
     this.isAdminVal = Boolean(sessionStorage.getItem('isAdmin'));
-    this.store.dispatch(new LoadHotels({ page, limit }));
     this.store.dispatch(new LoadFavoriteHotels());
     this.store.dispatch(new LoadAllHotels());
   }

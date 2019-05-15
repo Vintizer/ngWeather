@@ -1,8 +1,10 @@
+import { Store } from '@ngrx/store';
 import { HotelsService } from './../../hotels.service';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { IHotelComment } from 'src/app/models/hotel';
-import { pluck, switchMap } from 'rxjs/operators';
+import { pluck, switchMap, tap } from 'rxjs/operators';
+import { IState } from 'src/app/store/reducers';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-hotel-comments',
@@ -10,16 +12,16 @@ import { pluck, switchMap } from 'rxjs/operators';
   styleUrls: ['./hotel-comments.component.css']
 })
 export class HotelCommentsComponent implements OnInit {
-  public id: string;
+  public id$: Observable<string>;
   public comments: IHotelComment[];
   public constructor(
     private hotelsService: HotelsService,
-    private router: Router,
-    private ar: ActivatedRoute
+    private store: Store<IState>
   ) {}
 
   public ngOnInit(): void {
-    this.ar.parent.params
+    this.store
+      .select('router', 'state', 'params')
       .pipe(
         pluck('id'),
         switchMap((id: string) => this.hotelsService.getCommentsById(id))

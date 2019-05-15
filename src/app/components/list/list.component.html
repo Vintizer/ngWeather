@@ -4,8 +4,8 @@
       *ngIf="hotelsLength$ | async"
       #paginator
       [length]="hotelsLength$ | async"
-      [pageIndex]="pageIndex"
-      [pageSize]="pageSize"
+      [pageIndex]="pageIndex$ | async"
+      [pageSize]="pageSize$ | async"
       (page)="goToPage($event)"
     >
     </mat-paginator>

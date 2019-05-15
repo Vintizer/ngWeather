@@ -18,6 +18,7 @@ export interface IHotelState {
   error: string;
   filter: IFilterState;
   activeHotelId: number;
+  selectedHotel: IHotel | null;
 }
 const initialStarValue: string[] = ['3', '4', '5'];
 export const initialState: IHotelState = {
@@ -29,6 +30,7 @@ export const initialState: IHotelState = {
     text: '',
     star: initialStarValue
   },
+  selectedHotel: null,
   activeHotelId: -1
 };
 
@@ -49,6 +51,23 @@ export function reducer(
         data: action.payload
       };
     case HotelActionTypes.LoadHotelsError:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
+      };
+    case HotelActionTypes.LoadHotel:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case HotelActionTypes.LoadHotelSuccess:
+      return {
+        ...state,
+        isLoading: false,
+        selectedHotel: action.payload
+      };
+    case HotelActionTypes.LoadHotelError:
       return {
         ...state,
         isLoading: false,

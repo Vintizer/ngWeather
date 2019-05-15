@@ -1,3 +1,5 @@
+import { RouterEffects } from './store/effects/router.effects';
+import { CustomSerializer } from './store/reducers/custom-route-serializer';
 import { FavoriteHotelEffects } from './store/effects/favorite-hotel.effects';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -18,6 +20,7 @@ import { ParamInterceptor } from './services/api.interceptor';
 import { metaReducers, reducers } from './store/reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { HotelEffects } from './store/effects/hotel.effects';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,10 @@ import { HotelEffects } from './store/effects/hotel.effects';
     ReactiveFormsModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([HotelEffects, FavoriteHotelEffects])
+    EffectsModule.forRoot([HotelEffects, FavoriteHotelEffects, RouterEffects]),
+    StoreRouterConnectingModule.forRoot({
+      serializer: CustomSerializer
+    })
   ],
   providers: [
     {

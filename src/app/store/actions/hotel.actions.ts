@@ -5,6 +5,9 @@ export enum HotelActionTypes {
   LoadHotels = '[Hotel] Load Hotels',
   LoadHotelsSuccess = '[Hotel] Load Hotels Success',
   LoadHotelsError = '[Hotel] Load Hotels Error',
+  LoadHotel = '[Hotel] Load Hotel',
+  LoadHotelSuccess = '[Hotel] Load Hotel Success',
+  LoadHotelError = '[Hotel] Load Hotel Error',
   LoadAllHotels = '[Hotel] Load All Hotels',
   LoadAllHotelsSuccess = '[Hotel] Load Hotels All Success',
   LoadAllHotelsError = '[Hotel] Load Hotels All Error',
@@ -56,6 +59,23 @@ export class LoadHotelsError implements Action {
   public constructor(public payload: string) {}
 }
 // tslint:disable-next-line: max-classes-per-file
+export class LoadHotel implements Action {
+  public readonly type: HotelActionTypes.LoadHotel = HotelActionTypes.LoadHotel;
+  public constructor(public payload: string) {}
+}
+// tslint:disable-next-line: max-classes-per-file
+export class LoadHotelSuccess implements Action {
+  public readonly type: HotelActionTypes.LoadHotelSuccess =
+    HotelActionTypes.LoadHotelSuccess;
+  public constructor(public payload: IHotel) {}
+}
+// tslint:disable-next-line: max-classes-per-file
+export class LoadHotelError implements Action {
+  public readonly type: HotelActionTypes.LoadHotelError =
+    HotelActionTypes.LoadHotelError;
+  public constructor(public payload: string) {}
+}
+// tslint:disable-next-line: max-classes-per-file
 export class LoadAllHotels implements Action {
   public readonly type: HotelActionTypes.LoadAllHotels =
     HotelActionTypes.LoadAllHotels;
@@ -95,6 +115,9 @@ export type HotelActions =
   | LoadHotels
   | LoadHotelsSuccess
   | LoadHotelsError
+  | LoadHotel
+  | LoadHotelSuccess
+  | LoadHotelError
   | LoadAllHotels
   | LoadAllHotelsSuccess
   | LoadAllHotelsError

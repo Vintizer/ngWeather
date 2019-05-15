@@ -1,7 +1,10 @@
-import { IHotel } from './../../models/hotel';
-import { HotelsService } from './../../hotels.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { IState } from 'src/app/store/reducers';
+
+import { IHotel } from './../../models/hotel';
+import { LoadHotel } from './../../store/actions/hotel.actions';
 
 @Component({
   selector: 'app-hotel-details',
@@ -9,18 +12,15 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./hotel-details.component.css']
 })
 export class HotelDetailsComponent implements OnInit {
-  public hotel: IHotel;
+  public hotel$: Observable<IHotel>;
   public constructor(
-    private ar: ActivatedRoute,
-    private hotelsService: HotelsService
+    private store: Store<IState>
   ) {}
 
   public ngOnInit(): void {
-    this.ar.params.subscribe(param => {
-      const curHotelId: string = this.ar.snapshot.paramMap.get('id');
-      this.hotelsService
-        .getHotelById(curHotelId)
-        .subscribe((hotel: IHotel) => (this.hotel = hotel));
+    this.store.select('router', 'state', 'params', 'id').subscribe((id: string) => {
+      this.store.dispatch(new LoadHotel(id));
     });
+    this.hotel$ = this.store.select('hotel', 'selectedHotel');
   }
 }

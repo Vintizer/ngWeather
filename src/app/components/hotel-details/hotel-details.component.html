@@ -1,18 +1,18 @@
 
-<div class="card text-center" *ngIf="hotel">
+<div class="card text-center" *ngIf="hotel$ | async">
   <div class="card-header">
-    <a [routerLink]="['/hotels', hotel.id]">{{hotel.title}}</a>
+    <a [routerLink]="['/hotels', (hotel$ | async).id]">{{(hotel$ | async).title}}</a>
   </div>
   <div class="card-body">
-    <h5 class="card-title">Address: {{hotel.address}}</h5>
+    <h5 class="card-title">Address: {{(hotel$ | async).address}}</h5>
     <p class="card-text">
-      {{hotel.description}}
+      {{(hotel$ | async).description}}
     </p>
-    <a [routerLink]="['/hotels', hotel.id, 'comments']" class="btn btn-primary">Comments</a>
-    <a [routerLink]="['/hotels', hotel.id, 'contacts']" class="btn btn-primary">Contacts</a>
+    <a [routerLink]="['/hotels', (hotel$ | async).id, 'comments']" class="btn btn-primary">Comments</a>
+    <a [routerLink]="['/hotels', (hotel$ | async).id, 'contacts']" class="btn btn-primary">Contacts</a>
   </div>
   <router-outlet></router-outlet>
   <div class="card-footer text-muted">
-    <img src="{{hotel.picture}}">
+    <img src="{{(hotel$ | async).picture}}">
   </div>
 </div>
