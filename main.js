@@ -518,6 +518,7 @@ var HotelsService = /** @class */ (function () {
         return this.http.get(this.configUrl + "comments?hotel_id=" + id);
     };
     HotelsService.prototype.getAllHotels = function () {
+        console.log('getAllHotels: ', _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].configUrl);
         return this.http.get(this.configUrl + "hotels");
     };
     HotelsService.prototype.removeHotel = function (id) {
