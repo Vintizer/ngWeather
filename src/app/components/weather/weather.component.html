@@ -1,7 +1,7 @@
-<div class="row" *ngIf="weather">
-    <div class="card text-white bg-info">
+<div *ngIf="weather" class="h-100">
+    <div class="card text-white bg-info h-100">
       <div class="card-header">The weather is</div>
-      <div class="card-body">
+      <div class="card-body d-flex justify-content-center align-items-center">
         <i class="fas fa-{{ weather.icon }} fa-2x"></i>
         <span class="temperature">{{ weather.temperature }}°</span>
       </div>

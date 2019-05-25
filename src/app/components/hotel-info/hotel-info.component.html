@@ -1,0 +1,16 @@
+<div>
+  <div class="d-flex mb-3 justify-content-center">
+    <app-active-hotel-photo
+      [src]="activeHotel?.picture"
+      [description]="activeHotel?.description"
+    ></app-active-hotel-photo>
+  </div>
+  <div class="d-flex justify-content-around">
+    <div class="d-flex">
+      <app-weather [weather]="activeHotel?.weather"></app-weather>
+    </div>
+    <div class="d-flex">
+      <app-profile [profile]="activeHotel?.profile"></app-profile>
+    </div>
+  </div>
+</div>

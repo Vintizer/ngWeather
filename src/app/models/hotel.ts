@@ -27,6 +27,10 @@ export interface IHotel {
 export interface IFavoriteHotel extends IHotel {
   voted: number;
 }
+export interface IPageHotels {
+  page: number;
+  limit: number;
+}
 export interface IFavoriteView {
   voted: number;
   title: string;

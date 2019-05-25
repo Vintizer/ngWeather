@@ -73,16 +73,6 @@ export class HotelsComponent implements OnInit {
     this.activeHotel$ = this.store.select(activeHotelsSelector);
     this.filteredHotels$ = this.store.pipe(select(filteredHotelsSelector));
     this.isAdminVal = Boolean(sessionStorage.getItem('isAdmin'));
-    this.store.dispatch(new LoadFavoriteHotels());
     this.store.dispatch(new LoadAllHotels());
-  }
-
-  public iAdmin(): void {
-    if (this.isAdminVal) {
-      sessionStorage.removeItem('isAdmin');
-    } else {
-      sessionStorage.setItem('isAdmin', 'IAmASuperAdmin');
-    }
-    location.reload();
   }
 }

@@ -1,3 +1,4 @@
+import { FavoriteHotelsComponent } from './components/favorite-hotels/favorite-hotels.component';
 import { RouterEffects } from './store/effects/router.effects';
 import { CustomSerializer } from './store/reducers/custom-route-serializer';
 import { FavoriteHotelEffects } from './store/effects/favorite-hotel.effects';
@@ -21,13 +22,16 @@ import { metaReducers, reducers } from './store/reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { HotelEffects } from './store/effects/hotel.effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 @NgModule({
   declarations: [
     AppComponent,
     AboutComponent,
     NotFoundComponent,
-    NavbarComponent
+    NavbarComponent,
+    FavoriteHotelsComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +45,8 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
     EffectsModule.forRoot([HotelEffects, FavoriteHotelEffects, RouterEffects]),
     StoreRouterConnectingModule.forRoot({
       serializer: CustomSerializer
-    })
+    }),
+    ModalModule.forRoot(),
   ],
   providers: [
     {

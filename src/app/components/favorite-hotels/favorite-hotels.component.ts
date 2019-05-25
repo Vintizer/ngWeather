@@ -1,16 +1,15 @@
-import { RemoveFavoriteHotels } from './../../store/actions/favorite-hotel.actions';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-
-import {
-  IFavoriteView,
-  IJsonResponse,
-  ResponseType
-} from './../../models/hotel';
-import { FavoriteService } from './../../services/favorite-service.service';
 import { NotificationsService } from 'angular2-notifications';
-import { IState } from 'src/app/store/reducers';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
+import { IState } from 'src/app/store/reducers';
+
+import { IFavoriteView } from './../../models/hotel';
+import {
+  RemoveFavoriteHotels,
+  ToggleFavoriteHotels
+} from './../../store/actions/favorite-hotel.actions';
 
 @Component({
   selector: 'app-favorite-hotels',
@@ -19,13 +18,17 @@ import { Observable } from 'rxjs';
 })
 export class FavoriteHotelsComponent implements OnInit {
   public favoriteHotels: Observable<IFavoriteView[]>;
+  public isOpenHotels: Observable<boolean>;
+  public modalRef: BsModalRef;
 
   public constructor(
     private notificationsService: NotificationsService,
-    private store: Store<IState>
+    private store: Store<IState>,
+    private modalService: BsModalService
   ) {}
   public ngOnInit(): void {
     this.favoriteHotels = this.store.select('favoriteHotel', 'data');
+    this.isOpenHotels = this.store.select('favoriteHotel', 'isOpen');
   }
   public removeHotelFromFavorites(id: number, e: MouseEvent): void {
     e.preventDefault();
@@ -33,5 +36,14 @@ export class FavoriteHotelsComponent implements OnInit {
   }
   public trackByFn(_index: number, hotel: IFavoriteView): number {
     return hotel.id;
+  }
+  public toggleOpenFavorites(): void {
+    this.store.dispatch(new ToggleFavoriteHotels());
+  }
+  public openModal(template: TemplateRef<any>): void {
+    this.modalRef = this.modalService.show(template);
+  }
+  public hideModal(): void {
+    this.modalRef.hide();
   }
 }

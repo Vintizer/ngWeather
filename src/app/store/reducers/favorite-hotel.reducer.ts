@@ -10,12 +10,14 @@ export interface IFavState {
   data: IFavoriteView[];
   isLoading: boolean;
   error: string;
+  isOpen: boolean;
 }
 
 export const initialState: IFavState = {
   data: [],
   isLoading: false,
-  error: ''
+  error: '',
+  isOpen: false
 };
 
 export function reducer(
@@ -23,6 +25,11 @@ export function reducer(
   action: FavoriteHotelActions
 ): IFavState {
   switch (action.type) {
+    case FavoriteHotelActionTypes.ToggleFavoriteHotels:
+      return {
+        ...state,
+        isOpen: !state.isOpen
+      };
     case FavoriteHotelActionTypes.LoadFavoriteHotels:
       return {
         ...state,

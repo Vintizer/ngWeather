@@ -37,8 +37,6 @@ export class ListComponent implements OnInit {
   public constructor(private store: Store<IState>) {}
 
   public ngOnInit(): void {
-    this.pageIndex$ = of(0);
-    this.pageSize$ = of(20);
     this.pageIndex$ = this.store.select(
       'router',
       'state',

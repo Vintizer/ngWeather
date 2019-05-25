@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import { HotelsService } from 'src/app/hotels.service';
 
-import { IHotel } from './../../models/hotel';
+import { IHotel, IPageHotels } from './../../models/hotel';
 import {
   HotelActions,
   HotelActionTypes,
@@ -17,7 +17,8 @@ import {
   LoadHotelsSuccess,
   LoadHotelSuccess,
   RemoveHotelsError,
-  RemoveHotelsSuccess
+  RemoveHotelsSuccess,
+  SetActiveHotel
 } from './../actions/hotel.actions';
 import { IState } from '../reducers';
 
@@ -28,8 +29,9 @@ export class HotelEffects {
     LoadHotelsSuccess | LoadHotelsError
   > = this.actions$.pipe(
     ofType(HotelActionTypes.LoadHotels),
-    mergeMap(({ payload }) =>
+    mergeMap(({ payload }: {payload: IPageHotels}) =>
       this.hotelsService.getHotelsObservable(payload.page, payload.limit).pipe(
+        tap((hotels: IHotel[]) => this.store.dispatch(new SetActiveHotel(hotels[0].id))),
         map((hotels: IHotel[]) => new LoadHotelsSuccess(hotels)),
         catchError((err: string) => of(new LoadHotelsError(err)))
       )

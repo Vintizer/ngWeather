@@ -1,4 +1,4 @@
-import { IHotel } from './../../models/hotel';
+import { IHotel, IPageHotels } from './../../models/hotel';
 import { Action } from '@ngrx/store';
 
 export enum HotelActionTypes {
@@ -18,10 +18,7 @@ export enum HotelActionTypes {
   SetStarFilter = '[Hotel] Set Star Filter',
   SetActiveHotel = '[Hotel] Set Active Hotel'
 }
-interface IPageHotels {
-  page: number;
-  limit: number;
-}
+
 // tslint:disable-next-line: max-classes-per-file
 export class RemoveHotels implements Action {
   public readonly type: HotelActionTypes.RemoveHotels =

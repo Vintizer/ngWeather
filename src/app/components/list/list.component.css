@@ -7,3 +7,7 @@
 .hotelImg {
     max-width: 100%;
 }
+.hotels-list {
+    overflow-y: auto;
+    height: 600px;
+}

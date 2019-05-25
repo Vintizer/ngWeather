@@ -2,6 +2,8 @@ import { IFavoriteView, IHotelView } from './../../models/hotel';
 import { Action } from '@ngrx/store';
 
 export enum FavoriteHotelActionTypes {
+  ToggleFavoriteHotels = '[FavoriteHotel] Toggle FavoriteHotels',
+
   LoadFavoriteHotels = '[FavoriteHotel] Load FavoriteHotels',
   LoadFavoriteHotelsSuccess = '[FavoriteHotel] Load FavoriteHotels Success',
   LoadFavoriteHotelsFailure = '[FavoriteHotel] Load FavoriteHotels Failure',
@@ -19,6 +21,11 @@ export enum FavoriteHotelActionTypes {
   RemoveFavoriteHotelsFailure = '[FavoriteHotel] Remove FavoriteHotels Failure'
 }
 
+// tslint:disable-next-line: max-classes-per-file
+export class ToggleFavoriteHotels implements Action {
+  public readonly type: FavoriteHotelActionTypes.ToggleFavoriteHotels =
+    FavoriteHotelActionTypes.ToggleFavoriteHotels;
+}
 // tslint:disable-next-line: max-classes-per-file
 export class LoadFavoriteHotels implements Action {
   public readonly type: FavoriteHotelActionTypes.LoadFavoriteHotels =
@@ -83,8 +90,8 @@ export class VoteFavoriteHotelsFailure implements Action {
 export class RemoveFavoriteHotels implements Action {
   public readonly type: FavoriteHotelActionTypes.RemoveFavoriteHotels =
     FavoriteHotelActionTypes.RemoveFavoriteHotels;
-    public constructor(public payload: number) {}
-  }
+  public constructor(public payload: number) {}
+}
 
 // tslint:disable-next-line: max-classes-per-file
 export class RemoveFavoriteHotelsSuccess implements Action {
@@ -100,6 +107,7 @@ export class RemoveFavoriteHotelsFailure implements Action {
   public constructor(public payload: string) {}
 }
 export type FavoriteHotelActions =
+  | ToggleFavoriteHotels
   | LoadFavoriteHotels
   | LoadFavoriteHotelsSuccess
   | LoadFavoriteHotelsFailure

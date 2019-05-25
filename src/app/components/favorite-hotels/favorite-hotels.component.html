@@ -1,10 +1,67 @@
-<div class="row justify-content-center">
-  Favorites hotels
-  <div class="col-12 list-group-item d-flex justify-content-between" *ngFor="let hotel of (favoriteHotels | async); trackBy: trackByFn">
-    {{ hotel.title }}
-    <p>
-      <span class="badge badge-primary badge-pill mr-1">Voted {{ hotel.voted }}</span>
-      <a href="#" (click)="removeHotelFromFavorites(hotel.id, $event)" class="badge badge-primary badge-pill">X</a>
-    </p>
+<div class="d-flex justify-content-end">
+  <button type="button" class="btn btn-primary" (click)="openModal(template)">
+    {{ (isOpenHotels | async) ? 'Close' : 'Favorites' }}
+    <span class="badge badge-pill  badge-danger">{{
+      (favoriteHotels | async).length
+    }}</span>
+  </button>
+
+  <ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Favorites</h4>
+      <button
+        type="button"
+        class="close pull-right"
+        aria-label="Close"
+        (click)="modalRef.hide()"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div
+        class="col-12 list-group-item d-flex justify-content-between"
+        *ngFor="let hotel of favoriteHotels | async; trackBy: trackByFn"
+      >
+        <a [routerLink]="['/hotels', hotel.id]" (click)="hideModal()">
+          {{ hotel.title }}
+        </a>
+
+        <p>
+          <span class="badge badge-primary badge-pill mr-1"
+            >Voted {{ hotel.voted }}</span
+          >
+          <a
+            href="#"
+            (click)="removeHotelFromFavorites(hotel.id, $event)"
+            class="badge badge-primary badge-pill"
+            >X</a
+          >
+        </p>
+      </div>
+    </div>
+  </ng-template>
+</div>
+
+<div class="position-absolute modal">
+  <div class="row justify-content-center" *ngIf="isOpenHotels | async">
+    Favorites hotels
+    <div
+      class="col-12 list-group-item d-flex justify-content-between"
+      *ngFor="let hotel of favoriteHotels | async; trackBy: trackByFn"
+    >
+      {{ hotel.title }}
+      <p>
+        <span class="badge badge-primary badge-pill mr-1"
+          >Voted {{ hotel.voted }}</span
+        >
+        <a
+          href="#"
+          (click)="removeHotelFromFavorites(hotel.id, $event)"
+          class="badge badge-primary badge-pill"
+          >X</a
+        >
+      </p>
+    </div>
   </div>
 </div>

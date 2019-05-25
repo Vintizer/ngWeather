@@ -6,7 +6,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-import { FavoriteHotelsComponent } from '../components/favorite-hotels/favorite-hotels.component';
 import { FilterComponent } from '../components/filter/filter.component';
 import { HotelsComponent } from '../components/hotels/hotels.component';
 import { ListComponent } from '../components/list/list.component';
@@ -21,6 +20,7 @@ import { ActiveHotelPhotoComponent } from '../components/active-hotel-photo/acti
 import { HotelDetailsComponent } from '../components/hotel-details/hotel-details.component';
 import { HotelCommentsComponent } from '../components/hotel-comments/hotel-comments.component';
 import { HotelContactsComponent } from '../components/hotel-contacts/hotel-contacts.component';
+import { HotelInfoComponent } from '../components/hotel-info/hotel-info.component';
 
 const routes: Routes = [
   { path: '', component: HotelsComponent, pathMatch: 'full' },
@@ -46,7 +46,6 @@ const routes: Routes = [
     ProfileComponent,
     HotelsComponent,
     FilterComponent,
-    FavoriteHotelsComponent,
     StarsComponent,
     LoadingComponent,
     LoadingDirective,
@@ -54,16 +53,17 @@ const routes: Routes = [
     ActiveHotelPhotoComponent,
     HotelDetailsComponent,
     HotelCommentsComponent,
-    HotelContactsComponent
+    HotelContactsComponent,
+    HotelInfoComponent,
   ],
   imports: [
     CommonModule,
     MatCardModule,
     FontAwesomeModule,
     MatPaginatorModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
   ],
   entryComponents: [LoadingComponent],
-  providers: [FavoriteService]
+  providers: [FavoriteService],
 })
 export class HotelsModule {}

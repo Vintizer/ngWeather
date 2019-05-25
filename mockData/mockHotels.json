@@ -70,29 +70,6 @@
       ]
     },
     {
-      "id": 32,
-      "title": "Tazzy",
-      "address": "8275 Packers Court",
-      "description": "metus vitae ipsum aliquam non mauris",
-      "phone": "636-967-4815",
-      "picture": "assets/picture/13.jpg",
-      "stars": 5,
-      "weather": {
-        "temperature": 25,
-        "wind": 12,
-        "icon": "bolt"
-      },
-      "profile": {
-        "followers": 82,
-        "following": 99,
-        "photo": "assets/profile/6.jpg"
-      },
-      "photos": [
-        "assets/photos/2.jpg",
-        "assets/photos/1.jpg"
-      ]
-    },
-    {
       "id": 33,
       "title": "Tagopia",
       "address": "45452 Service Crossing",
@@ -3895,8 +3872,13 @@
       "voted": 1
     },
     {
-      "title": "Edgeclub",
-      "id": 29,
+      "title": "Devpulse",
+      "id": 31,
+      "voted": 1
+    },
+    {
+      "title": "Pixope",
+      "id": 156,
       "voted": 1
     }
   ],
